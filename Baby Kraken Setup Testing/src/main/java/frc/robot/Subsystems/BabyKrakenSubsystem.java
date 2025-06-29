@@ -11,20 +11,23 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BabyKrakenSubsystem extends SubsystemBase {
-  public static TalonFX bKraken = new TalonFX(8);
+  public static TalonFX bKraken = new TalonFX(3);
   private static TalonFXConfiguration bKrakenConfig = new TalonFXConfiguration();
   private static MotionMagicConfigs bKrakenMotionMagicConfig = bKrakenConfig.MotionMagic;
 
   private static PositionDutyCycle bKrakenPosCycle = new PositionDutyCycle(0);
   private static final MotionMagicDutyCycle motionMagicCycle = new MotionMagicDutyCycle(0);
+
+  public static boolean hasAlgae = false;
   /** Creates a new BabyKrakenSubsystem. */
   public BabyKrakenSubsystem() {
-    configureBabyKraken(false);
+    configureBabyKraken(true);
   }
 
   @Override
@@ -32,6 +35,11 @@ public class BabyKrakenSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Baby Kraken Voltage", bKraken.getStatorCurrent().getValueAsDouble());
     SmartDashboard.putNumber("Baby Kraken Position", bKraken.getPosition().getValueAsDouble());
+    SmartDashboard.putBoolean("Has Algae", hasAlgae);
+  }
+
+  public static void hasAlgae(boolean algae){
+    hasAlgae = algae;
   }
 
   public static void runBabyKraken(double speed){
@@ -63,6 +71,8 @@ public class BabyKrakenSubsystem extends SubsystemBase {
       bKrakenMotionMagicConfig.MotionMagicCruiseVelocity = 80; // Target cruise velocity of 80 rps
       bKrakenMotionMagicConfig.MotionMagicAcceleration = 160; 
     }
+
+    bKraken.setNeutralMode(NeutralModeValue.Brake);
 
     bKraken.getConfigurator().apply(bKrakenConfig);
   }

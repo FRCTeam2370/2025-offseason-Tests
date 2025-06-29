@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Commands.IntakeAlgae;
 import frc.robot.Commands.RunBabyKrakenAtSpeed;
 import frc.robot.Commands.SetBabyKrakenToPos;
 import frc.robot.Subsystems.BabyKrakenSubsystem;
@@ -21,9 +22,10 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driver.a().whileTrue(new RunBabyKrakenAtSpeed(0.5, mBabyKrakenSubsystem));
+    driver.a().toggleOnTrue(new IntakeAlgae(0.9, 0.6, mBabyKrakenSubsystem));
+    driver.b().whileTrue(new RunBabyKrakenAtSpeed(-0.5, mBabyKrakenSubsystem));
 
-    driver.b().onTrue(new SetBabyKrakenToPos(5, mBabyKrakenSubsystem));
+    //driver.b().onTrue(new SetBabyKrakenToPos(5, mBabyKrakenSubsystem));
   }
 
   public Command getAutonomousCommand() {
