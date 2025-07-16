@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.RunIntake;
 import frc.robot.Commands.SetIntakePos;
+import frc.robot.Commands.SetIntakePosWithMagic;
 import frc.robot.Subsystems.IntakeSubsystem;
 
 public class RobotContainer {
@@ -29,11 +30,15 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driver.leftBumper().whileTrue(new RunIntake(0.2, mIntakeSubsystem));
-    driver.rightBumper().whileTrue(new RunIntake(-1, mIntakeSubsystem));
+    driver.leftBumper().whileTrue(new RunIntake(0.35, mIntakeSubsystem));
+    driver.rightBumper().whileTrue(new RunIntake(-0.35, mIntakeSubsystem));
 
-    driver.a().onTrue(new SetIntakePos(-3.8, mIntakeSubsystem));
-    driver.b().onTrue(new SetIntakePos(-0.15, mIntakeSubsystem));
+    // driver.a().onTrue(new SetIntakePos(-33, mIntakeSubsystem));
+    // driver.b().onTrue(new SetIntakePos(0, mIntakeSubsystem));
+    driver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -78.5));
+    driver.x().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -33));
+    driver.b().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -15));
+    driver.y().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 0));
   }
 
   public Command getAutonomousCommand() {

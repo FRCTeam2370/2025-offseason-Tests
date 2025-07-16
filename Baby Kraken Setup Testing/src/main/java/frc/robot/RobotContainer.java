@@ -23,7 +23,9 @@ public class RobotContainer {
 
   private void configureBindings() {
     driver.a().toggleOnTrue(new IntakeAlgae(0.9, 0.6, mBabyKrakenSubsystem));
+    driver.x().toggleOnTrue(new IntakeAlgae(0.7, 0.6, mBabyKrakenSubsystem));
     driver.b().whileTrue(new RunBabyKrakenAtSpeed(-0.5, mBabyKrakenSubsystem));
+    driver.y().whileTrue(new RunBabyKrakenAtSpeed(0.4, mBabyKrakenSubsystem));
 
     //driver.b().onTrue(new SetBabyKrakenToPos(5, mBabyKrakenSubsystem));
   }
