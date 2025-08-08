@@ -9,7 +9,6 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SetShoulderPos;
 import frc.robot.commands.elevatorSetPos;
-import frc.robot.commands.runShoulder;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
@@ -61,6 +60,7 @@ public class RobotContainer {
 
     driver.a().onTrue(new SetShoulderPos(15, mShoulderSubsystem));
     driver.y().onTrue(new SetShoulderPos(1, mShoulderSubsystem));
+    driver.leftBumper().onTrue(new SetShoulderPos(59.5, mShoulderSubsystem));
 
     driver.x().onTrue(new elevatorSetPos(mElevatorSubsystem, 0));
     driver.b().onTrue(new elevatorSetPos(mElevatorSubsystem, 27));

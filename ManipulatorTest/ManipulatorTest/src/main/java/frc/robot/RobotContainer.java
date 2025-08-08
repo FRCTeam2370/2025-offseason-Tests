@@ -21,7 +21,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driver.rightBumper().whileTrue(new RunManipulator(manipulatorSubsystem, 0.5));
+    driver.rightBumper().whileTrue(new RunManipulator(manipulatorSubsystem, 0.75));
     driver.leftBumper().whileTrue(new RunManipulator(manipulatorSubsystem, -0.5));
   }
 

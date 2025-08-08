@@ -62,7 +62,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public static void configurePivotMotor(){
     IntakePivot.setPosition(0);
-    IntakePivot.setNeutralMode(NeutralModeValue.Coast);
+    IntakePivot.setNeutralMode(NeutralModeValue.Brake);
 
     pivotConfig.Slot0.kP = 0.05;
     pivotConfig.Slot0.kI = 0;
@@ -81,5 +81,6 @@ public class IntakeSubsystem extends SubsystemBase {
     pivotConfig.MotionMagic.MotionMagicAcceleration = 200;// double your cruise velocity
 
     IntakePivot.getConfigurator().apply(pivotConfig);
+    IntakePivot.setNeutralMode(NeutralModeValue.Brake);
   }
 }
