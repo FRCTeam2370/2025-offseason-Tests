@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -14,12 +11,14 @@ import frc.robot.Commands.RunManipulator;
 import frc.robot.Commands.SetIntakePosWithMagic;
 import frc.robot.Commands.SetShoulderPos;
 import frc.robot.Commands.elevatorSetPos;
+import frc.robot.Commands.Drive.ResetGyro;
+import frc.robot.Commands.Drive.TeleopSwerve;
 import frc.robot.Subsystems.ElevatorSubsystem;
 import frc.robot.Subsystems.IntakeSubsystem;
 import frc.robot.Subsystems.ManipulatorSubsystem;
 import frc.robot.Subsystems.ShoulderSubsystem;
+import frc.robot.Subsystems.SwerveSubsystem;
 import frc.robot.Subsystems.TestingStateHandler;
-import pabeles.concurrency.IntOperatorTask.Min;
 
 public class RobotContainer {
   private static final ElevatorSubsystem mElevatorSubsystem = new ElevatorSubsystem();
@@ -27,6 +26,7 @@ public class RobotContainer {
   private static final ManipulatorSubsystem mManipulatorSubsystem = new ManipulatorSubsystem();
   private static final ShoulderSubsystem mShoulderSubsystem = new ShoulderSubsystem();
   public static final TestingStateHandler mStateHandler = new TestingStateHandler(mElevatorSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mShoulderSubsystem);
+  private static final SwerveSubsystem mSwerve = new SwerveSubsystem();
 
   public static CommandXboxController elevatorDriver = new CommandXboxController(0);
   public static CommandXboxController IntakeDriver = new CommandXboxController(1);
@@ -38,7 +38,9 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    
+        mSwerve.setDefaultCommand(new TeleopSwerve(mSwerve, ()-> IntakeDriver.getRawAxis(0), ()-> -IntakeDriver.getRawAxis(1), ()-> IntakeDriver.getRawAxis(4), ()-> false));
+        IntakeDriver.start().onTrue(new ResetGyro(mSwerve));
+
         elevatorDriver.x().onTrue(new elevatorSetPos(mElevatorSubsystem, 0));//bottom
         elevatorDriver.b().onTrue(new elevatorSetPos(mElevatorSubsystem, 27));//top
         
