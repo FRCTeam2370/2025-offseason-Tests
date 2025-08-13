@@ -21,7 +21,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driver.rightBumper().whileTrue(new RunManipulator(manipulatorSubsystem, 0.75));
+    driver.rightBumper().whileTrue(new RunManipulator(manipulatorSubsystem, 0.75));//<--- this is a great speed!!!!
     driver.leftBumper().whileTrue(new RunManipulator(manipulatorSubsystem, -0.5));
   }
 

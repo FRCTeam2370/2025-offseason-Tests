@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Commands.IntakeCoral;
+import frc.robot.Commands.RunIntake;
 import frc.robot.Commands.RunManipulator;
 import frc.robot.Commands.SetIntakePosWithMagic;
 import frc.robot.Commands.SetShoulderPos;
@@ -38,20 +40,22 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-        mSwerve.setDefaultCommand(new TeleopSwerve(mSwerve, ()-> IntakeDriver.getRawAxis(0), ()-> -IntakeDriver.getRawAxis(1), ()-> IntakeDriver.getRawAxis(4), ()-> false));
-        IntakeDriver.start().onTrue(new ResetGyro(mSwerve));
+        mSwerve.setDefaultCommand(new TeleopSwerve(mSwerve, ()-> ShoulderDriver.getRawAxis(0), ()-> -ShoulderDriver.getRawAxis(1), ()-> ShoulderDriver.getRawAxis(4), ()-> false));
+        ShoulderDriver.start().onTrue(new ResetGyro(mSwerve));
 
-        elevatorDriver.x().onTrue(new elevatorSetPos(mElevatorSubsystem, 0));//bottom
-        elevatorDriver.b().onTrue(new elevatorSetPos(mElevatorSubsystem, 27));//top
+        ShoulderDriver.x().onTrue(new elevatorSetPos(mElevatorSubsystem, 0));//bottom
+        ShoulderDriver.leftBumper().onTrue(new elevatorSetPos(mElevatorSubsystem, 41.13));//top
         
-        IntakeDriver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -78.5));//ground intake
+        IntakeDriver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -87));//ground intake
         IntakeDriver.x().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -33));//bottom row
         IntakeDriver.b().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -15));//top row
         IntakeDriver.y().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 0));//stowed
-        IntakeDriver.leftBumper().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 15));
-        IntakeDriver.rightBumper().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 25));
+        IntakeDriver.leftBumper().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 10));//climb
+        IntakeDriver.rightBumper().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -40));//higher climb
+        IntakeDriver.leftTrigger().toggleOnTrue(new IntakeCoral(0.5, mIntakeSubsystem));
+        IntakeDriver.rightTrigger().whileTrue(new RunIntake(-0.2, mIntakeSubsystem));
         
-        ShoulderDriver.a().onTrue(new SetShoulderPos(15, mShoulderSubsystem));//descore forward ?
+        ShoulderDriver.a().onTrue(new SetShoulderPos(32, mShoulderSubsystem));//descore forward ?
         ShoulderDriver.y().onTrue(new SetShoulderPos(1, mShoulderSubsystem));//stow
         ShoulderDriver.b().onTrue(new SetShoulderPos(59.5, mShoulderSubsystem));//descore reverse
 

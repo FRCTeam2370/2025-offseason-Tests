@@ -37,9 +37,9 @@ public class TeleopSwerve extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xVal = Math.abs(xSup.getAsDouble()) < 0.01 ? 0 : xSup.getAsDouble();
-    double yVal = Math.abs(ySup.getAsDouble()) < 0.01 ? 0 : ySup.getAsDouble();
-    double rotVal = Math.abs(rotSup.getAsDouble()) < 0.01 ? 0 : rotSup.getAsDouble();
+    double xVal = Math.abs(xSup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : xSup.getAsDouble();
+    double yVal = Math.abs(ySup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : ySup.getAsDouble();
+    double rotVal = Math.abs(rotSup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : rotSup.getAsDouble();
 
     if(SwerveSubsystem.isBlue()){
       xVal = -xVal;

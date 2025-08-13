@@ -4,19 +4,27 @@
 
 package frc.robot.Subsystems;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
-  public static TalonFX IntakePivot = new TalonFX(6);
-  public static TalonFX IntakeRollers = new TalonFX(7);
+  public static TalonFX IntakePivot = new TalonFX(Constants.IntakeConstants.IntakeID);
+  public static TalonFX IntakeRollers = new TalonFX(Constants.IntakeConstants.RollersID);
+  public static CANcoder IntakeEncoder = new CANcoder(Constants.IntakeConstants.EncoderID);
+
+  public static boolean hasCoral = false;
 
   public static TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
   public static TalonFXConfiguration rollerConfig = new TalonFXConfiguration();
@@ -33,6 +41,13 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("IntakePos", IntakePivot.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("Intake Absolute Degrees", Rotation2d.fromRotations(IntakeEncoder.getAbsolutePosition().getValueAsDouble()).getDegrees());
+    SmartDashboard.putBoolean("HasCoral", hasCoral);
+    SmartDashboard.putNumber("Rollers Voltage", getRollerCurrent());
+
+    if(hasCoral){
+      IntakeRollers.set(0.025);
+    }
   }
 
   public static void setIntakePose(double pose){
@@ -47,12 +62,18 @@ public class IntakeSubsystem extends SubsystemBase {
 
   }
 
+  public static double getRollerCurrent(){
+    return IntakeRollers.getStatorCurrent().getValueAsDouble();
+  }
+
   public static void runIntake(double speed){
     IntakeRollers.set(speed);
   }
 
   public static void configureRollerMotor(){
     IntakeRollers.setNeutralMode(NeutralModeValue.Brake);
+
+    rollerConfig.CurrentLimits.StatorCurrentLimit = 40;
 
     rollerConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.1;
     rollerConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
@@ -61,8 +82,9 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public static void configurePivotMotor(){
-    IntakePivot.setPosition(0);
-    IntakePivot.setNeutralMode(NeutralModeValue.Brake);
+    IntakePivot.setPosition((IntakeEncoder.getAbsolutePosition().getValueAsDouble() - Constants.IntakeConstants.Offset.getRotations()) * 273);
+    //IntakePivot.setPosition(0);
+    //IntakePivot.setNeutralMode(NeutralModeValue.Brake);
 
     pivotConfig.Slot0.kP = 0.05;
     pivotConfig.Slot0.kI = 0;

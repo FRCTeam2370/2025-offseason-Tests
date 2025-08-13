@@ -112,9 +112,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
     resetGyro();
     if(SwerveSubsystem.isBlue()){
-      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), Rotation2d.fromDegrees(SwerveSubsystem.gyro.getYaw().getValueAsDouble() + 90)));
+      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), Rotation2d.fromDegrees(SwerveSubsystem.gyro.getYaw().getValueAsDouble())));
     }else{
-      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), Rotation2d.fromDegrees(SwerveSubsystem.gyro.getYaw().getValueAsDouble() + 270)));
+      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), Rotation2d.fromDegrees(SwerveSubsystem.gyro.getYaw().getValueAsDouble() + 180)));
     }
     
     PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
@@ -238,7 +238,7 @@ public class SwerveSubsystem extends SubsystemBase {
     resetGyro();
   }
   public static void resetGyro(){
-    gyro.setYaw(180);//270
+    gyro.setYaw(270);//
         
   }
 

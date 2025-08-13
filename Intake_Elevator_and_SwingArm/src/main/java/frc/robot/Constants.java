@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.pathplanner.lib.path.PathConstraints;
@@ -41,6 +43,15 @@ public final class Constants {
   public static class ElevatorConstants {
     public static final int elevatorID = 14;
   }
+
+  public static class IntakeConstants {
+    public static final int IntakeID = 6;
+    public static final int RollersID = 7;
+    public static final int EncoderID = 5;
+
+    public static final Rotation2d Offset = Rotation2d.fromDegrees(160.8398);
+  }
+
    public static class PhotonVisionConstants {
         public static final double cameraHeight = Units.inchesToMeters(11.75);
 
@@ -59,6 +70,8 @@ public final class Constants {
     }
 
     public static class SwerveConstants {
+        public static final double Deadband = 0.075;
+
         public static final PathConstraints telePathConstraints = new PathConstraints(2.5, 2, Math.toRadians(540.000), Math.toRadians(720.000));
         public static final double DrivekP = 0.02;
         public static final double DrivekI = 0;
@@ -180,10 +193,10 @@ public final class Constants {
         public static final int turnMotorID = 22;
         public static final int CANCoderID = 23;
 
-        public static final InvertedValue driveInverted = InvertedValue.Clockwise_Positive;//counter clockwise
+        public static final InvertedValue driveInverted = InvertedValue.CounterClockwise_Positive;//counter clockwise
         public static final InvertedValue turnInverted = InvertedValue.Clockwise_Positive;
 
-        public static final Rotation2d EncoderOffset = Rotation2d.fromDegrees(290.2148);
+        public static final Rotation2d EncoderOffset = Rotation2d.fromDegrees(50.2734);
         public static final SensorDirectionValue EncoderReversed = SensorDirectionValue.CounterClockwise_Positive;
 
         public static final SwerveModuleConstants FRConstants = new SwerveModuleConstants(driveMotorID, turnMotorID, CANCoderID, driveInverted, turnInverted, EncoderOffset, EncoderReversed);
@@ -195,10 +208,10 @@ public final class Constants {
         public static final int turnMotorID = 12;
         public static final int CANCoderID = 13;
 
-        public static final InvertedValue driveInverted = InvertedValue.CounterClockwise_Positive;//clockwise
+        public static final InvertedValue driveInverted = InvertedValue.Clockwise_Positive;//clockwise
         public static final InvertedValue turnInverted = InvertedValue.Clockwise_Positive;
 
-        public static final Rotation2d EncoderOffset = Rotation2d.fromDegrees(173.5830);
+        public static final Rotation2d EncoderOffset = Rotation2d.fromDegrees(291.97265);
         public static final SensorDirectionValue EncoderReversed = SensorDirectionValue.CounterClockwise_Positive;
 
         public static final SwerveModuleConstants FLConstants = new SwerveModuleConstants(driveMotorID, turnMotorID, CANCoderID, driveInverted, turnInverted, EncoderOffset, EncoderReversed);
@@ -210,10 +223,10 @@ public final class Constants {
         public static final int turnMotorID = 32;
         public static final int CANCoderID = 33;
 
-        public static final InvertedValue driveInverted = InvertedValue.Clockwise_Positive;//counter clockwise
+        public static final InvertedValue driveInverted = InvertedValue.CounterClockwise_Positive;//counter clockwise
         public static final InvertedValue turnInverted = InvertedValue.Clockwise_Positive;
 
-        public static final Rotation2d EncoderOffset = Rotation2d.fromDegrees(82.3535);
+        public static final Rotation2d EncoderOffset = Rotation2d.fromDegrees(38.671875);
         public static final SensorDirectionValue EncoderReversed = SensorDirectionValue.CounterClockwise_Positive;
 
         public static final SwerveModuleConstants BRConstants = new SwerveModuleConstants(driveMotorID, turnMotorID, CANCoderID, driveInverted, turnInverted, EncoderOffset, EncoderReversed);
@@ -225,10 +238,10 @@ public final class Constants {
         public static final int turnMotorID = 42;
         public static final int CANCoderID = 43;
 
-        public static final InvertedValue driveInverted = InvertedValue.CounterClockwise_Positive;//clockwise
+        public static final InvertedValue driveInverted = InvertedValue.Clockwise_Positive;//clockwise
         public static final InvertedValue turnInverted = InvertedValue.Clockwise_Positive;
 
-        public static final Rotation2d EncoderOffset = Rotation2d.fromDegrees(318.07617);
+        public static final Rotation2d EncoderOffset = Rotation2d.fromDegrees(210.7617);
         public static final SensorDirectionValue EncoderReversed = SensorDirectionValue.CounterClockwise_Positive;
 
         public static final SwerveModuleConstants BLConstants = new SwerveModuleConstants(driveMotorID, turnMotorID, CANCoderID, driveInverted, turnInverted, EncoderOffset, EncoderReversed);

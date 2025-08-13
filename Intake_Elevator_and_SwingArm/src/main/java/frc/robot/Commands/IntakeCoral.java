@@ -5,16 +5,17 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.BabyKrakenSubsystem;
+import frc.robot.Subsystems.IntakeSubsystem;
+import pabeles.concurrency.IntOperatorTask.Min;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class SetBabyKrakenToPos extends Command {
-  double pos;
-  /** Creates a new SetBabyKrakenToPos. */
-  public SetBabyKrakenToPos(double pos, BabyKrakenSubsystem mBabyKrakenSubsystem) {
+public class IntakeCoral extends Command {
+  double speed;
+  /** Creates a new IntakeCoral. */
+  public IntakeCoral(double speed, IntakeSubsystem mIntakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.pos = pos;
-    addRequirements(mBabyKrakenSubsystem);
+    this.speed = speed;
+    addRequirements(mIntakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -22,9 +23,9 @@ public class SetBabyKrakenToPos extends Command {
   public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
-  @Overrideks
+  @Override
   public void execute() {
-    BabyKrakenSubsystem.setMotionMagic(pos);
+    IntakeSubsystem.runIntake(speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -34,6 +35,10 @@ public class SetBabyKrakenToPos extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(IntakeSubsystem.getRollerCurrent() > 10){
+      IntakeSubsystem.hasCoral = true;
+      return true;
+    }
     return false;
   }
 }
