@@ -4,6 +4,7 @@
 
 package frc.robot.Commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.ElevatorSubsystem;
 
@@ -21,6 +22,7 @@ public class elevatorSetPos extends Command {
   @Override
   public void initialize() {
     System.out.println("running elevatorSetPos()");
+    SmartDashboard.putBoolean("In Elevator Command", true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -31,11 +33,17 @@ public class elevatorSetPos extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    SmartDashboard.putBoolean("In Elevator Command", false);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(ElevatorSubsystem.elevatorMotor.getPosition().getValueAsDouble() >= pos * 0.95){
+      return true;
+    }else{
+      return false;
+    }
   }
 }

@@ -43,12 +43,13 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   private static void elevatorConfiguration(){
-    elevatorMotor.setNeutralMode(NeutralModeValue.Coast);
+    
     elevatorMotor.setPosition(0);
 
-    elevatorConfig.Slot0.kP = 0.2;
+    elevatorConfig.Slot0.kP = 0.25;
     elevatorConfig.Slot0.kI = 0;
-    elevatorConfig.Slot0.kD = 0.01;
+    elevatorConfig.Slot0.kD = 0.001;
+    elevatorConfig.Slot0.kG = 0.015;
 
     elevatorConfig.Slot0.kS = 0;
     elevatorConfig.Slot0.kV = 0.002;
@@ -60,5 +61,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
     elevatorMotor.getConfigurator().apply(elevatorConfig);
+    elevatorMotor.setNeutralMode(NeutralModeValue.Coast);
   }
 }

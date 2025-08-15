@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.IntakeCoral;
+import frc.robot.Commands.MechanismCommands.SetMechanismToPose;
+import frc.robot.Commands.MechanismCommands.StowMechanism;
 import frc.robot.Commands.RunIntake;
 import frc.robot.Commands.RunManipulator;
 import frc.robot.Commands.SetIntakePosWithMagic;
@@ -40,8 +42,8 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-        mSwerve.setDefaultCommand(new TeleopSwerve(mSwerve, ()-> ShoulderDriver.getRawAxis(0), ()-> -ShoulderDriver.getRawAxis(1), ()-> ShoulderDriver.getRawAxis(4), ()-> false));
-        ShoulderDriver.start().onTrue(new ResetGyro(mSwerve));
+        mSwerve.setDefaultCommand(new TeleopSwerve(mSwerve, ()-> ManipulatorDriver.getRawAxis(0), ()-> -ManipulatorDriver.getRawAxis(1), ()-> ManipulatorDriver.getRawAxis(4), ()-> false));
+        ManipulatorDriver.start().onTrue(new ResetGyro(mSwerve));
 
         ShoulderDriver.x().onTrue(new elevatorSetPos(mElevatorSubsystem, 0));//bottom
         ShoulderDriver.leftBumper().onTrue(new elevatorSetPos(mElevatorSubsystem, 41.13));//top
@@ -60,7 +62,17 @@ public class RobotContainer {
         ShoulderDriver.b().onTrue(new SetShoulderPos(59.5, mShoulderSubsystem));//descore reverse
 
         ManipulatorDriver.rightBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, 0.75));//<--- this is a great speed!!!!
-        ManipulatorDriver.leftBumper().whileFalse(new RunManipulator(mManipulatorSubsystem, -0.5));
+        ManipulatorDriver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -0.75));
+
+        // ManipulatorDriver.a().onTrue(new SetMechanismToPose(10, 19, mElevatorSubsystem, mShoulderSubsystem, mIntakeSubsystem));
+        // ManipulatorDriver.x().onTrue(new SetMechanismToPose(41.13, 32, mElevatorSubsystem, mShoulderSubsystem, mIntakeSubsystem));
+        // ManipulatorDriver.b().onTrue(new StowMechanism(mElevatorSubsystem, mShoulderSubsystem, mIntakeSubsystem));
+        ManipulatorDriver.rightTrigger().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 0));//stowed
+        ManipulatorDriver.leftTrigger().onTrue(new elevatorSetPos(mElevatorSubsystem, 1));
+        ManipulatorDriver.a().onTrue(new elevatorSetPos(mElevatorSubsystem, 5));
+        ManipulatorDriver.b().onTrue(new elevatorSetPos(mElevatorSubsystem, 10));
+        ManipulatorDriver.x().onTrue(new elevatorSetPos(mElevatorSubsystem,15));
+        ManipulatorDriver.y().onTrue(new elevatorSetPos(mElevatorSubsystem, 24));
   }
 
   public Command getAutonomousCommand() {
