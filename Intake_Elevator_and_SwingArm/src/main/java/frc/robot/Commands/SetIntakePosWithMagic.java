@@ -34,28 +34,29 @@ public class SetIntakePosWithMagic extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double x = ElevatorSubsystem.elevatorMotor.getPosition().getValueAsDouble();
-    SmartDashboard.putNumber("X", x);
-    max = (-30.4 - 3.68*x + 2.18*Math.pow(x, 2) -0.374*Math.pow(x, 3) + 0.0295*Math.pow(x, 4) -0.00109*Math.pow(x, 5) + 0.0000155*Math.pow(x, 6)) - 5;//-30.4\ -3.68x\ +2.18x^{2}-0.374x^{3}+0.0295x^{4}-0.00109x^{5}+0.0000155x^{6}
-    SmartDashboard.putNumber("Max before logic", max);
-    if(max > 0 || ElevatorSubsystem.elevatorMotor.getPosition().getValueAsDouble() > 21){
-      max = -5;
-    }
+  //   double x = ElevatorSubsystem.elevatorMotor.getPosition().getValueAsDouble();
+  //   SmartDashboard.putNumber("X", x);
+  //  // max = (-30.4 - 3.68*x + 2.18*Math.pow(x, 2) -0.374*Math.pow(x, 3) + 0.0295*Math.pow(x, 4) -0.00109*Math.pow(x, 5) + 0.0000155*Math.pow(x, 6)) - 5;//-30.4\ -3.68x\ +2.18x^{2}-0.374x^{3}+0.0295x^{4}-0.00109x^{5}+0.0000155x^{6}
+  //   SmartDashboard.putNumber("Max before logic", max);
+  //   if(max > 0 || ElevatorSubsystem.elevatorMotor.getPosition().getValueAsDouble() > 21){
+  //     max = -5;
+  //   }
 
-    if(pos < min){
-      IntakeSubsystem.setIntakeMagicPose(min);
-    }else{
-      IntakeSubsystem.setIntakeMagicPose(pos);
-    }
+  //   if(pos < min){
+  //     IntakeSubsystem.setIntakeMagicPose(min);
+  //   }else{
+  //     IntakeSubsystem.setIntakeMagicPose(pos);
+  //   }
 
-    if(pos > max){
-      IntakeSubsystem.setIntakeMagicPose(max);
-    }else{
-      IntakeSubsystem.setIntakeMagicPose(pos);
-    }
+  //   if(pos > max){
+  //     IntakeSubsystem.setIntakeMagicPose(max);
+  //   }else{
+  //     IntakeSubsystem.setIntakeMagicPose(pos);
+  //   }
     
-    SmartDashboard.putNumber("Max after logic", max);
-    SmartDashboard.putNumber("Pos After logic", pos);
+  //   SmartDashboard.putNumber("Max after logic", max);
+  //   SmartDashboard.putNumber("Pos After logic", pos);
+  IntakeSubsystem.setIntakeMagicPose(pos);
     
   }
 

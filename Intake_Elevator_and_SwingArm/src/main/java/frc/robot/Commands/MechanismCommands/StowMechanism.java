@@ -5,6 +5,7 @@
 package frc.robot.Commands.MechanismCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Commands.MoveMechanism;
 import frc.robot.Commands.SetIntakePosWithMagic;
 import frc.robot.Commands.SetShoulderPos;
 import frc.robot.Commands.elevatorSetPos;
@@ -20,6 +21,6 @@ public class StowMechanism extends SequentialCommandGroup {
   public StowMechanism(ElevatorSubsystem mElevatorSubsystem, ShoulderSubsystem mShoulderSubsystem, IntakeSubsystem mIntakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new SequentialCommandGroup(new SetIntakePosWithMagic(mIntakeSubsystem, -35), new SetShoulderPos(1, mShoulderSubsystem), new elevatorSetPos(mElevatorSubsystem, 0), new SetIntakePosWithMagic(mIntakeSubsystem, 0)));
+    addCommands(new MoveMechanism(0, 1, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem).andThen( new SetIntakePosWithMagic(mIntakeSubsystem, 0)));
   }
 }

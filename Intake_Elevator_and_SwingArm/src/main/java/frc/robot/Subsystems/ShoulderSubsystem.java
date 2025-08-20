@@ -44,6 +44,10 @@ public class ShoulderSubsystem extends SubsystemBase {
     shoulderMotor.setControl(shoulderMagicCycle.withPosition(pos));
   }
 
+  public static double getShoulderPos(){
+    return shoulderMotor.getPosition().getValueAsDouble();
+  }
+
   private static void configShoulder(){
     shoulderMotor.setPosition(0);
     shoulderMotor.setNeutralMode(NeutralModeValue.Brake);

@@ -52,6 +52,16 @@ public final class Constants {
     public static final Rotation2d Offset = Rotation2d.fromDegrees(160.8398);
   }
 
+  public static class MechanismConstants {
+    public static final double XMinInt = -33.61;
+    public static final double LMinIntEle = -12.19;
+    public static final double EMinElev = 21.96;
+    public static final double SMinShould = 14.9;
+
+    public static final double minimizerFactor = 0.95;
+    public static final double maximizerFactor = 1.05;
+  }
+
    public static class PhotonVisionConstants {
         public static final double cameraHeight = Units.inchesToMeters(11.75);
 

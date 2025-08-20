@@ -7,7 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Commands.IntakeAlgae;
 import frc.robot.Commands.IntakeCoral;
+import frc.robot.Commands.MoveElevatorIncrimentally;
+import frc.robot.Commands.MoveMechanism;
 import frc.robot.Commands.MechanismCommands.SetMechanismToPose;
 import frc.robot.Commands.MechanismCommands.StowMechanism;
 import frc.robot.Commands.RunIntake;
@@ -36,14 +39,15 @@ public class RobotContainer {
   public static CommandXboxController IntakeDriver = new CommandXboxController(1);
   public static CommandXboxController ShoulderDriver = new CommandXboxController(2);
   public static CommandXboxController ManipulatorDriver = new CommandXboxController(3);
+  public static CommandXboxController driver = new CommandXboxController(4);
 
   public RobotContainer() {
     configureBindings();
   }
 
   private void configureBindings() {
-        mSwerve.setDefaultCommand(new TeleopSwerve(mSwerve, ()-> ManipulatorDriver.getRawAxis(0), ()-> -ManipulatorDriver.getRawAxis(1), ()-> ManipulatorDriver.getRawAxis(4), ()-> false));
-        ManipulatorDriver.start().onTrue(new ResetGyro(mSwerve));
+        mSwerve.setDefaultCommand(new TeleopSwerve(mSwerve, ()-> driver.getRawAxis(0), ()-> -driver.getRawAxis(1), ()-> driver.getRawAxis(4), ()-> false));
+        driver.start().onTrue(new ResetGyro(mSwerve));
 
         ShoulderDriver.x().onTrue(new elevatorSetPos(mElevatorSubsystem, 0));//bottom
         ShoulderDriver.leftBumper().onTrue(new elevatorSetPos(mElevatorSubsystem, 41.13));//top
@@ -73,6 +77,16 @@ public class RobotContainer {
         ManipulatorDriver.b().onTrue(new elevatorSetPos(mElevatorSubsystem, 10));
         ManipulatorDriver.x().onTrue(new elevatorSetPos(mElevatorSubsystem,15));
         ManipulatorDriver.y().onTrue(new elevatorSetPos(mElevatorSubsystem, 24));
+
+
+        //mElevatorSubsystem.setDefaultCommand(new MoveElevatorIncrimentally(mElevatorSubsystem));
+        //driver.b().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 0));
+        driver.x().onTrue(new MoveMechanism(25, 15, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.a().onTrue(new MoveMechanism(0, 22, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.b().onTrue(new MoveMechanism(0, 1, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.y().onTrue(new MoveMechanism(41, 32, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.rightBumper().toggleOnTrue(new IntakeAlgae(0.75, mManipulatorSubsystem));//<--- this is a great speed!!!!
+        driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -0.75));
   }
 
   public Command getAutonomousCommand() {

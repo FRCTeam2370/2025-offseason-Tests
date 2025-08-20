@@ -42,6 +42,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorMotor.setControl(elevatorMagicPosCycle.withPosition(pos));
   }
 
+  public static double getElevatorPos(){
+    return elevatorMotor.getPosition().getValueAsDouble();
+  }
+
   private static void elevatorConfiguration(){
     
     elevatorMotor.setPosition(0);

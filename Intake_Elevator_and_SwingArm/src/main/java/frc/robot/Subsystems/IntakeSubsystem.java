@@ -70,6 +70,10 @@ public class IntakeSubsystem extends SubsystemBase {
     IntakeRollers.set(speed);
   }
 
+  public static double getIntakePos(){
+    return IntakePivot.getPosition().getValueAsDouble();
+  }
+
   public static void configureRollerMotor(){
     IntakeRollers.setNeutralMode(NeutralModeValue.Brake);
 

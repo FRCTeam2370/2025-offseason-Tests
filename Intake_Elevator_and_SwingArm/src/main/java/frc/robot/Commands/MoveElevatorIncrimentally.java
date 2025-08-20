@@ -4,41 +4,46 @@
 
 package frc.robot.Commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.ManipulatorSubsystem;
+import frc.robot.RobotContainer;
+import frc.robot.Subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RunManipulator extends Command {
-  ManipulatorSubsystem mManipulatorSubsystem;
-  double speed;
-  /** Creates a new RunManipulator. */
-  public RunManipulator(ManipulatorSubsystem mManipulatorSubsystem, double speed) {
+public class MoveElevatorIncrimentally extends Command {
+  double val = 0;
+  /** Creates a new MoveElevatorIncrimentally. */
+  public MoveElevatorIncrimentally(ElevatorSubsystem mElevatorSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.mManipulatorSubsystem = mManipulatorSubsystem;
-    this.speed = speed;
-    addRequirements(mManipulatorSubsystem);
+    addRequirements(mElevatorSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    System.out.println("running RunManipulator()");
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(speed < 0){
-      ManipulatorSubsystem.hasAlgae = false;
+    if(RobotContainer.driver.a().getAsBoolean()){
+      val -= 1;
     }
-    ManipulatorSubsystem.runManipulator(speed);
+    if(RobotContainer.driver.y().getAsBoolean()){
+      val += 1;
+    }
+
+    if(val > 41){
+      val = 41;
+    }else if(val < 0){
+      val = 0;
+    }
+    SmartDashboard.putNumber("Elevator Incrimental val", val);
+    ElevatorSubsystem.setElevatorPosButMagical(val);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    ManipulatorSubsystem.runManipulator(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
