@@ -95,7 +95,7 @@ public final class Constants {
 
         public static final double driveRamp = 0.2;
 
-        public static final double maxSpeed = 5.21208;//meters per second
+        public static final double maxSpeed = 3;//5.21208 //meters per second
         public static final double maxAngularVelocity = 2.25;//3.1154127;//radians per second
 
         public static final double wheelRadius = 3.75 / 2;

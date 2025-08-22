@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.time.chrono.MinguoChronology;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -78,15 +80,27 @@ public class RobotContainer {
         ManipulatorDriver.x().onTrue(new elevatorSetPos(mElevatorSubsystem,15));
         ManipulatorDriver.y().onTrue(new elevatorSetPos(mElevatorSubsystem, 24));
 
+        //Old Setpoint Commands
 
         //mElevatorSubsystem.setDefaultCommand(new MoveElevatorIncrimentally(mElevatorSubsystem));
         //driver.b().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 0));
-        driver.x().onTrue(new MoveMechanism(25, 15, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.a().onTrue(new MoveMechanism(0, 22, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.b().onTrue(new MoveMechanism(0, 1, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.y().onTrue(new MoveMechanism(41, 32, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.rightBumper().toggleOnTrue(new IntakeAlgae(0.75, mManipulatorSubsystem));//<--- this is a great speed!!!!
-        driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -0.75));
+        // driver.x().onTrue(new MoveMechanism(25, 15, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        // driver.a().onTrue(new MoveMechanism(0, 22, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        // driver.b().onTrue(new MoveMechanism(0, 1, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        // driver.y().onTrue(new MoveMechanism(41, 32, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        // driver.rightBumper().toggleOnTrue(new IntakeAlgae(0.75, mManipulatorSubsystem));//<--- this is a great speed!!!!
+        // driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -0.75));
+
+        //New Setpoint Commands 
+
+        driver.b().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -25));
+        driver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 22));
+        driver.x().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -89));
+        driver.povUp().onTrue(new MoveMechanism(0, 20, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.rightTrigger().onTrue(new IntakeCoral(.4, mIntakeSubsystem));
+        driver.leftTrigger().whileTrue(new RunIntake(-.5, mIntakeSubsystem));
+        driver.rightBumper().onTrue(new IntakeAlgae(.4, mManipulatorSubsystem));
+        driver.leftBumper().onTrue(new RunManipulator(mManipulatorSubsystem, -.5));
   }
 
   public Command getAutonomousCommand() {
