@@ -94,9 +94,10 @@ public class RobotContainer {
         //New Setpoint Commands 
 
         driver.b().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -25));
-        driver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 22));
+        driver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 11));
         driver.x().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -89));
-        driver.povUp().onTrue(new MoveMechanism(0, 20, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.povUp().onTrue(new MoveMechanism(0, 22, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.povDown().onTrue(new MoveMechanism(0, 17, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.rightTrigger().onTrue(new IntakeCoral(.4, mIntakeSubsystem));
         driver.leftTrigger().whileTrue(new RunIntake(-.5, mIntakeSubsystem));
         driver.rightBumper().onTrue(new IntakeAlgae(.4, mManipulatorSubsystem));
