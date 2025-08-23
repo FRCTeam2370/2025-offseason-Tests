@@ -64,7 +64,7 @@ public final class Constants {
     public static final double minimizerFactor = 0.95;
     public static final double maximizerFactor = 1.05;
 
-    public static final double minShoulderVal = 11;
+    public static final double minShoulderVal = 0;
     public static final double minIntakeVal = 25;
     public static final double minElevatorVal = 0;
 
