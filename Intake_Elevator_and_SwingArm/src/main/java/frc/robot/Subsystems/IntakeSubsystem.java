@@ -6,6 +6,7 @@ package frc.robot.Subsystems;
 
 import static edu.wpi.first.units.Units.Rotation;
 
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
@@ -28,11 +29,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public static TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
   public static TalonFXConfiguration rollerConfig = new TalonFXConfiguration();
+  public static CANcoderConfiguration cancoderConfig = new CANcoderConfiguration();
 
   public static PositionDutyCycle pivotCycle = new PositionDutyCycle(0);
   public static MotionMagicDutyCycle pivotMagic = new MotionMagicDutyCycle(0);
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
+    configureIntakeCANCoder();
     configureRollerMotor();
     configurePivotMotor();
   }
@@ -72,6 +75,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public static double getIntakePos(){
     return IntakePivot.getPosition().getValueAsDouble();
+  }
+
+  public static void configureIntakeCANCoder(){
+    cancoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 1;
+
+    IntakeEncoder.getConfigurator().apply(cancoderConfig);
   }
 
   public static void configureRollerMotor(){

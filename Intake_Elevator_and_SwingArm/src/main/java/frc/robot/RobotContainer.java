@@ -98,9 +98,11 @@ public class RobotContainer {
         driver.x().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -89));
         driver.povUp().onTrue(new MoveMechanism(0, 22, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.povDown().onTrue(new MoveMechanism(0, 17, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.rightTrigger().onTrue(new IntakeCoral(.4, mIntakeSubsystem));
+        driver.povLeft().onTrue(new MoveMechanism(0, 1, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.povRight().onTrue(new MoveMechanism(25, 15, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.rightTrigger().toggleOnTrue(new IntakeCoral(.4, mIntakeSubsystem));
         driver.leftTrigger().whileTrue(new RunIntake(-.5, mIntakeSubsystem));
-        driver.rightBumper().onTrue(new IntakeAlgae(.4, mManipulatorSubsystem));
+        driver.rightBumper().toggleOnTrue(new IntakeAlgae(.4, mManipulatorSubsystem));
         driver.leftBumper().onTrue(new RunManipulator(mManipulatorSubsystem, -.5));
   }
 

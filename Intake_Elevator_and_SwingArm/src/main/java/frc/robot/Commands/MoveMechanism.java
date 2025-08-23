@@ -23,8 +23,8 @@ public class MoveMechanism extends Command {
   /** Creates a new MoveMechanism. */
   public MoveMechanism(double elevatorPos, double shoulderPos, boolean shouldStowIntake, IntakeSubsystem mIntakeSubsystem, ShoulderSubsystem mShoulderSubsystem, ElevatorSubsystem mElevatorSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.elevatorPos = elevatorPos;
-    this.shoulderPos = shoulderPos;
+    this.elevatorPos = elevatorPos > Constants.MechanismConstants.maxElevatorVal ? Constants.MechanismConstants.maxElevatorVal : elevatorPos < Constants.MechanismConstants.minElevatorVal ? Constants.MechanismConstants.minElevatorVal : elevatorPos;
+    this.shoulderPos = shoulderPos > Constants.MechanismConstants.maxShoulderVal ? Constants.MechanismConstants.maxShoulderVal : shoulderPos < Constants.MechanismConstants.minShoulderVal ? Constants.MechanismConstants.minShoulderVal : shoulderPos;
     this.shouldStowIntake = shouldStowIntake;
     addRequirements(mIntakeSubsystem, mElevatorSubsystem, mShoulderSubsystem);
   }
@@ -39,6 +39,8 @@ public class MoveMechanism extends Command {
     curShoulderPos = ShoulderSubsystem.getShoulderPos();
 
     //Logic to determine whether or not to move the intake on start
+
+    //We first determine if the desired elevator position is >= than E (variables explained in Constants)
     if(elevatorPos >= Constants.MechanismConstants.EMinElev){
       if(curElevPos < Constants.MechanismConstants.EMinElev * Constants.MechanismConstants.minimizerFactor){
         if(shoulderPos >= Constants.MechanismConstants.SMinShould && curShoulderPos >= Constants.MechanismConstants.SMinShould){
@@ -79,65 +81,29 @@ public class MoveMechanism extends Command {
       }
 
       if((IntakeSubsystem.getIntakePos() <= Constants.MechanismConstants.XMinInt * Constants.MechanismConstants.minimizerFactor || ElevatorSubsystem.getElevatorPos() >= Constants.MechanismConstants.EMinElev * Constants.MechanismConstants.minimizerFactor) && shoulderPos > 0){
-        // if(shoulderPos < Constants.MechanismConstants.SMinShould && elevatorPos < Constants.MechanismConstants.EMinElev){
-        //   ShoulderSubsystem.setShoulderWithMagic(Constants.MechanismConstants.SMinShould);
-        // }
         ShoulderSubsystem.setShoulderWithMagic(shoulderPos);
       }
 
-      if((ElevatorSubsystem.getElevatorPos() >= elevatorPos * Constants.MechanismConstants.minimizerFactor && ElevatorSubsystem.getElevatorPos() <= elevatorPos * Constants.MechanismConstants.maximizerFactor && ElevatorSubsystem.getElevatorPos() >= Constants.MechanismConstants.EMinElev * Constants.MechanismConstants.minimizerFactor) || (ShoulderSubsystem.getShoulderPos() >= shoulderPos * Constants.MechanismConstants.minimizerFactor && ShoulderSubsystem.getShoulderPos() <= shoulderPos * Constants.MechanismConstants.maximizerFactor && ShoulderSubsystem.getShoulderPos() >= Constants.MechanismConstants.SMinShould * Constants.MechanismConstants.minimizerFactor) && shouldStowIntake){
-        IntakeSubsystem.setIntakeMagicPose(0);
-        if(IntakeSubsystem.getIntakePos() >= -0.5){
-          // isFinished = true;
+      if(ElevatorSubsystem.getElevatorPos() >= elevatorPos - 0.5 && ElevatorSubsystem.getElevatorPos() <= elevatorPos + 0.5 && ShoulderSubsystem.getShoulderPos() >= shoulderPos - 0.5 && ShoulderSubsystem.getShoulderPos() <= shoulderPos + 0.5 && shouldStowIntake){
+        if(ElevatorSubsystem.getElevatorPos() >= Constants.MechanismConstants.EMinElev - 0.5){
+          IntakeSubsystem.setIntakeMagicPose(0);
+        }
+        if(ShoulderSubsystem.getShoulderPos() >= Constants.MechanismConstants.SMinShould - 0.5){
+          IntakeSubsystem.setIntakeMagicPose(0);
+        }
+        if(ShoulderSubsystem.getShoulderPos() <= 2 && ElevatorSubsystem.getElevatorPos() <= 5){
+          IntakeSubsystem.setIntakeMagicPose(0);
         }
       }
-      // }else if(ElevatorSubsystem.getElevatorPos() >= elevatorPos * Constants.MechanismConstants.minimizerFactor && ElevatorSubsystem.getElevatorPos() <= elevatorPos * Constants.MechanismConstants.maximizerFactor && ShoulderSubsystem.getShoulderPos() >= shoulderPos * Constants.MechanismConstants.minimizerFactor && ShoulderSubsystem.getShoulderPos() <= shoulderPos * Constants.MechanismConstants.maximizerFactor){
-       
-      // }
-      if(elevatorPos == 0 && shoulderPos == 1 && ElevatorSubsystem.getElevatorPos() >= elevatorPos * Constants.MechanismConstants.minimizerFactor && ElevatorSubsystem.getElevatorPos() <= elevatorPos * Constants.MechanismConstants.maximizerFactor && ShoulderSubsystem.getShoulderPos() >= shoulderPos * Constants.MechanismConstants.minimizerFactor && ShoulderSubsystem.getShoulderPos() <= shoulderPos * Constants.MechanismConstants.maximizerFactor){
-        IntakeSubsystem.setIntakeMagicPose(0);
-      }
+
     }else{
       SmartDashboard.putBoolean("In don't move intake", true);
       ElevatorSubsystem.setElevatorPosButMagical(elevatorPos);
 
       if(ElevatorSubsystem.getElevatorPos() >= Constants.MechanismConstants.EMinElev * Constants.MechanismConstants.minimizerFactor && shoulderPos > 0){
-        // if(shoulderPos < Constants.MechanismConstants.SMinShould && elevatorPos < Constants.MechanismConstants.EMinElev){
-        //   ShoulderSubsystem.setShoulderWithMagic(Constants.MechanismConstants.SMinShould);
-        // }
         ShoulderSubsystem.setShoulderWithMagic(shoulderPos);
       }
-
-      if(ElevatorSubsystem.getElevatorPos() >= elevatorPos * Constants.MechanismConstants.minimizerFactor && ElevatorSubsystem.getElevatorPos() <= elevatorPos * Constants.MechanismConstants.maximizerFactor && ShoulderSubsystem.getShoulderPos() >= shoulderPos * Constants.MechanismConstants.minimizerFactor && ShoulderSubsystem.getShoulderPos() <= shoulderPos * Constants.MechanismConstants.maximizerFactor){
-        //isFinished = true;
-      }
-
-      if(elevatorPos == 0 && shoulderPos == 1 && ElevatorSubsystem.getElevatorPos() >= elevatorPos * Constants.MechanismConstants.minimizerFactor && ElevatorSubsystem.getElevatorPos() <= elevatorPos * Constants.MechanismConstants.maximizerFactor && ShoulderSubsystem.getShoulderPos() >= shoulderPos * Constants.MechanismConstants.minimizerFactor && ShoulderSubsystem.getShoulderPos() <= shoulderPos * Constants.MechanismConstants.maximizerFactor){
-        IntakeSubsystem.setIntakeMagicPose(0);
-      }
     }
-
-    // SmartDashboard.putBoolean("In don't move intake", false);
-    //   if(shoulderPos > 0){
-    //     IntakeSubsystem.setIntakeMagicPose(Constants.MechanismConstants.XMinInt);
-    //   }else{
-    //     IntakeSubsystem.setIntakeMagicPose(Constants.MechanismConstants.LMinIntEle);
-    //   }
-
-    //   if(IntakeSubsystem.getIntakePos() <= Constants.MechanismConstants.LMinIntEle * Constants.MechanismConstants.minimizerFactor){
-    //     ElevatorSubsystem.setElevatorPosButMagical(elevatorPos);
-    //   }
-
-    //   if(IntakeSubsystem.getIntakePos() <= Constants.MechanismConstants.XMinInt * Constants.MechanismConstants.minimizerFactor || ElevatorSubsystem.getElevatorPos() >= Constants.MechanismConstants.EMinElev * Constants.MechanismConstants.minimizerFactor){
-    //     // if(shoulderPos < Constants.MechanismConstants.SMinShould && elevatorPos < Constants.MechanismConstants.EMinElev){
-    //     //   ShoulderSubsystem.setShoulderWithMagic(Constants.MechanismConstants.SMinShould);
-    //     // }
-    //     ShoulderSubsystem.setShoulderWithMagic(shoulderPos);
-    //   }
-
-      // if((ElevatorSubsystem.getElevatorPos() >= elevatorPos * Constants.MechanismConstants.minimizerFactor && ElevatorSubsystem.getElevatorPos() <= elevatorPos * Constants.MechanismConstants.maximizerFactor && ElevatorSubsystem.getElevatorPos() >= Constants.MechanismConstants.EMinElev * Constants.MechanismConstants.minimizerFactor) || (ShoulderSubsystem.getShoulderPos() >= shoulderPos * Constants.MechanismConstants.minimizerFactor && ShoulderSubsystem.getShoulderPos() <= shoulderPos * Constants.MechanismConstants.maximizerFactor && ShoulderSubsystem.getShoulderPos() >= Constants.MechanismConstants.SMinShould * Constants.MechanismConstants.minimizerFactor) && shouldStowIntake){
-      //   IntakeSubsystem.setIntakeMagicPose(0);
-      // }
   }
 
   // Called once the command ends or is interrupted.
@@ -149,13 +115,10 @@ public class MoveMechanism extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if(ElevatorSubsystem.getElevatorPos() >= elevatorPos * Constants.MechanismConstants.minimizerFactor){
-    //   SmartDashboard.putBoolean("Finished Mechanism Command", true);
-    //   return true;
-    // }else{
-    //   SmartDashboard.putBoolean("Finished Mechanism Command", true);
-    //   return false;
-    // }
-    return false;
+    if(ElevatorSubsystem.getElevatorPos() >= elevatorPos - 0.5 && ElevatorSubsystem.getElevatorPos() <= elevatorPos + 0.5 && ShoulderSubsystem.getShoulderPos() >= shoulderPos - 0.5 && ShoulderSubsystem.getShoulderPos() <= shoulderPos + 0.5){
+      return true;
+    }else{
+      return false;
+    }
   }
 }

@@ -53,13 +53,24 @@ public final class Constants {
   }
 
   public static class MechanismConstants {
+    //X = minimum intake value at which the Shoulder can move freely without colliding with the intake while the Elevator is stowed
     public static final double XMinInt = -33.61;
     public static final double LMinIntEle = -12.19;
     public static final double EMinElev = 21.96;
     public static final double SMinShould = 14.9;
 
+    public static final double[] safeStowShould = {0, 2};
+
     public static final double minimizerFactor = 0.95;
     public static final double maximizerFactor = 1.05;
+
+    public static final double minShoulderVal = 11;
+    public static final double minIntakeVal = 25;
+    public static final double minElevatorVal = 0;
+
+    public static final double maxShoulderVal = 63.45;
+    public static final double maxIntakeVal = -92.15;
+    public static final double maxElevatorVal = 41.13;
   }
 
    public static class PhotonVisionConstants {
@@ -96,7 +107,7 @@ public final class Constants {
         public static final double driveRamp = 0.2;
 
         public static final double maxSpeed = 3;//5.21208 //meters per second
-        public static final double maxAngularVelocity = 2.25;//3.1154127;//radians per second
+        public static final double maxAngularVelocity = 1;//3.1154127;//radians per second
 
         public static final double wheelRadius = 3.75 / 2;
         public static final double wheelCircumference = (2 * Math.PI) * wheelRadius;
