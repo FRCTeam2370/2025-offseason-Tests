@@ -4,71 +4,115 @@
 
 package frc.robot.Subsystems;
 
-import java.security.PublicKey;
+import static edu.wpi.first.units.Units.Centimeters;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.Percent;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Seconds;
 
-import edu.wpi.first.wpilibj.DigitalOutput;
+import java.util.Map;
+
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
-  public static DigitalOutput output1 = new DigitalOutput(0);
-  public static DigitalOutput output2 = new DigitalOutput(0);
-  public static DigitalOutput output3 = new DigitalOutput(0);
-  public static DigitalOutput output4 = new DigitalOutput(0);
+
+  //Sets Addresable LED Port and addresable LED strip length
+  private final AddressableLED feedbackLEDs = new AddressableLED(0);
+  private final AddressableLEDBuffer LEDBuffer = new AddressableLEDBuffer(22);
+
+
+  //Sets the spacing of our LEDs which are 22 leds per 0.15 meters
+  private static final Distance LEDSpacing = Meters.of(0.15/22);
+
+  //Disable Animation does a continuous scrolling rainbow effect
+  Map<Double, Color> maskSteps = Map.of(0.0, Color.kWhite, 0.5, Color.kBlack);
+  LEDPattern disableAnimBase = LEDPattern.rainbow(255, 128);
+  LEDPattern disableAnimMask = LEDPattern.steps(maskSteps).scrollAtRelativeSpeed(Percent.per(Second).of(.25));
+  LEDPattern disableAnim = disableAnimBase.mask(disableAnimMask);
+
+  //Blue Climbing Anim does a scrolling gradient animation that takes around 3 seconds to complete of the colros limegreen and blue
+  LEDPattern blueClimbAnimBase = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, Color.kLimeGreen, Color.kBlue);
+  LEDPattern blueClimbAnimMask = blueClimbAnimBase.scrollAtRelativeSpeed(Percent.per(Second).of(.25));
+  LEDPattern blueclimbAnim = blueClimbAnimBase.scrollAtAbsoluteSpeed(Centimeters.per(Second).of(9.89), LEDSpacing);
+
+
+  //Red Climbing Anim does a scrolling gradient animation that takes around 3 seconds to complete of the colros limegreen and red
+  LEDPattern redClimbAnimBase = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, Color.kLimeGreen, Color.kRed);
+  LEDPattern redClimbAnimMask = redClimbAnimBase.scrollAtRelativeSpeed(Percent.per(Second).of(.25));
+  LEDPattern redclimbAnim = redClimbAnimBase.scrollAtAbsoluteSpeed(Centimeters.per(Second).of(9.89), LEDSpacing);
+
+  //Able to score Anim shows a static green gradient
+  LEDPattern ableToScoreAnim = LEDPattern.gradient(LEDPattern.GradientType.kContinuous, Color.kDarkGreen, Color.kLimeGreen);
+
+  //Unable to score Anim shows a static red gradient
+  LEDPattern unableToScoreAnim = LEDPattern.gradient(LEDPattern.GradientType.kContinuous, Color.kDarkRed, Color.kRed);
+
+  //Robot has Coral Animation does a breathing animation every second of two different whites
+  LEDPattern hasCoralAnimBase = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, Color.kWhite, Color.kGhostWhite);
+  LEDPattern hasCoralAnim = hasCoralAnimBase.breathe(Seconds.of(1));
+
+  //Robot has Algae Animation does a breathing animation every second of a teal and turqoise gradient
+  LEDPattern hasAlgaeAnimBase = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, Color.kTeal, Color.kTurquoise);
+  LEDPattern hasAlgaeAnim = hasAlgaeAnimBase.breathe(Seconds.of(1));
+
+  //Endgame Warning Animation Flashes red on/off every .25 seconds
+  LEDPattern endgameWarningAnimBase = LEDPattern.solid(Color.kRed);
+  LEDPattern endgameWarningAnim = endgameWarningAnimBase.blink(Seconds.of(.25));
+
   /** Creates a new LEDSubsystem. */
-  public LEDSubsystem() {}
+  public LEDSubsystem() {
+    feedbackLEDs.setLength(LEDBuffer.getLength());
+    feedbackLEDs.start();
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
 
-  public static void hasCoralLED() {
-    output1.set(false);
-    output2.set(false);
-    output3.set(false);
-    output4.set(false);
+  public void disableLEDAnim() {
+    disableAnim.applyTo(LEDBuffer);
+    feedbackLEDs.setData(LEDBuffer);
   }
 
-  public static void hasAlgaeLED() {
-    output1.set(false);
-    output2.set(false);
-    output3.set(false);
-    output4.set(false);
+  public void blueClimbLEDAnim() {
+    blueclimbAnim.applyTo(LEDBuffer);
+    feedbackLEDs.setData(LEDBuffer);
   }
 
-  public static void ableToScoreLED() {
-    output1.set(false);
-    output2.set(false);
-    output3.set(false);
-    output4.set(false);
+  public void redClimbLEDAnim() {
+    redclimbAnim.applyTo(LEDBuffer);
+    feedbackLEDs.setData(LEDBuffer);
   }
 
-  public static void unableToScoreLED() {
-    output1.set(false);
-    output2.set(false);
-    output3.set(false);
-    output4.set(false);
+  public void ableToScoreLEDAnim() {
+    ableToScoreAnim.applyTo(LEDBuffer);
+    feedbackLEDs.setData(LEDBuffer);
   }
 
-  public static void redClimbLED() {
-    output1.set(false);
-    output2.set(false);
-    output3.set(false);
-    output4.set(false);
+  public void unableToScoreLEDAnim() {
+    unableToScoreAnim.applyTo(LEDBuffer);
+    feedbackLEDs.setData(LEDBuffer);
   }
 
-  public static void blueClimbLED() {
-    output1.set(false);
-    output2.set(false);
-    output3.set(false);
-    output4.set(false);
+  public void hasAlgaeLEDAnim() {
+    hasAlgaeAnim.applyTo(LEDBuffer);
+    feedbackLEDs.setData(LEDBuffer);
   }
 
-  public static void endgameWarning() {
-    output1.set(false);
-    output2.set(false);
-    output3.set(false);
-    output4.set(false);
+  public void hasCoralLEDAnim() {
+    hasCoralAnim.applyTo(LEDBuffer);
+    feedbackLEDs.setData(LEDBuffer);
+  }
+
+  public void endgameWarningLEDAnim () {
+    endgameWarningAnim.applyTo(LEDBuffer);
+    feedbackLEDs.setData(LEDBuffer);
   }
 
 }
