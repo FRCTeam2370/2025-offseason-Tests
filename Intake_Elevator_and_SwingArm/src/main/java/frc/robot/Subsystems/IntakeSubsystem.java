@@ -16,6 +16,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,7 +26,10 @@ public class IntakeSubsystem extends SubsystemBase {
   public static TalonFX IntakeRollers = new TalonFX(Constants.IntakeConstants.RollersID);
   public static CANcoder IntakeEncoder = new CANcoder(Constants.IntakeConstants.EncoderID);
 
+  public static AnalogInput bowlSensor = new AnalogInput(3);
+
   public static boolean hasCoral = false;
+  public static boolean hasAlgaeInBowl = false;
 
   public static TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
   public static TalonFXConfiguration rollerConfig = new TalonFXConfiguration();
@@ -47,9 +51,15 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Intake Absolute Degrees", Rotation2d.fromRotations(IntakeEncoder.getAbsolutePosition().getValueAsDouble()).getDegrees());
     SmartDashboard.putBoolean("HasCoral", hasCoral);
     SmartDashboard.putNumber("Rollers Voltage", getRollerCurrent());
+    SmartDashboard.putNumber("bowl Sensor", bowlSensor.getValue());
 
     if(hasCoral){
       IntakeRollers.set(0.025);
+    }
+    if(bowlSensor.getValue() < 70){
+      hasAlgaeInBowl = true;
+    }else{
+      hasAlgaeInBowl = false;
     }
   }
 

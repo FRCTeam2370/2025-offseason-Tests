@@ -55,9 +55,19 @@ public final class Constants {
   public static class MechanismConstants {
     //X = minimum intake value at which the Shoulder can move freely without colliding with the intake while the Elevator is stowed
     public static final double XMinInt = -33.61;
+    //L = minimum intake value at which the elevator can move freely without colliding with the intake while the Shoulder is stowed
     public static final double LMinIntEle = -12.19;
+    //E = minmum elevator value at which the shoulder can move freely without colliding with the stowed intake
     public static final double EMinElev = 21.96;
+    //S = minmum shoulder value at which the intake can move freely without colliding with the stowed elevator
     public static final double SMinShould = 14.9;
+
+    //The same value meanings except while the manipulator is holding an algae
+    public static final double XMinIntAlg = -67.5;
+    public static final double LMinIntEleAlg = -30;
+    public static final double EMinElevAlg = 35.71;
+    public static final double SMinShouldAlg = 14.9;
+
 
     public static final double[] safeStowShould = {0, 2};
 
@@ -67,6 +77,8 @@ public final class Constants {
     public static final double minShoulderVal = 0;
     public static final double minIntakeVal = 25;
     public static final double minElevatorVal = 0;
+    public static final double minElevatorValAlg = 7.3;
+    public static final double minShoulderValAlg = 2;
 
     public static final double maxShoulderVal = 63.45;
     public static final double maxIntakeVal = -92.15;

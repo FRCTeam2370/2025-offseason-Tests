@@ -46,11 +46,10 @@ public class SetIntakePosWithMagic extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if(IntakeSubsystem.IntakePivot.getPosition().getValueAsDouble() >= pos - 0.25 && IntakeSubsystem.IntakePivot.getPosition().getValueAsDouble() <= pos + 0.25){
-    //   return true;
-    // }else{
-    //   return false;
-    // }
-    return false;
+    if(IntakeSubsystem.IntakePivot.getPosition().getValueAsDouble() >= pos - 0.25 && IntakeSubsystem.IntakePivot.getPosition().getValueAsDouble() <= pos + 0.25){
+      return true;
+    }else{
+      return false;
+    }
   }
 }

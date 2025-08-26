@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.IntakeAlgae;
+import frc.robot.Commands.IntakeAlgaeWithMech;
 import frc.robot.Commands.IntakeCoral;
 import frc.robot.Commands.MoveElevatorIncrimentally;
 import frc.robot.Commands.MoveMechanism;
@@ -19,6 +20,8 @@ import frc.robot.Commands.RunIntake;
 import frc.robot.Commands.RunManipulator;
 import frc.robot.Commands.SetIntakePosWithMagic;
 import frc.robot.Commands.SetShoulderPos;
+import frc.robot.Commands.StowWithAlgaeInBucket;
+import frc.robot.Commands.YeetAlgae;
 import frc.robot.Commands.elevatorSetPos;
 import frc.robot.Commands.Drive.ResetGyro;
 import frc.robot.Commands.Drive.TeleopSwerve;
@@ -99,11 +102,15 @@ public class RobotContainer {
         driver.povUp().onTrue(new MoveMechanism(0, 22, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.povDown().onTrue(new MoveMechanism(0, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.povLeft().onTrue(new MoveMechanism(0, 1, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.povRight().onTrue(new MoveMechanism(25, 15, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.povRight().onTrue(new MoveMechanism(41, 30, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.rightTrigger().toggleOnTrue(new IntakeCoral(.4, mIntakeSubsystem));
-        driver.leftTrigger().whileTrue(new RunIntake(-.5, mIntakeSubsystem));
+        driver.leftTrigger().whileTrue(new RunIntake(-0.5, mIntakeSubsystem));
         driver.rightBumper().toggleOnTrue(new IntakeAlgae(.4, mManipulatorSubsystem));
-        driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -.5));
+        driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -1));
+
+        driver.y().onTrue(new IntakeAlgaeWithMech(0.85, mIntakeSubsystem, mElevatorSubsystem, mShoulderSubsystem));
+        driver.back().onTrue(new YeetAlgae(mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem, mShoulderSubsystem));
+        //driver.back().onTrue(new StowWithAlgaeInBucket(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
   }
 
   public Command getAutonomousCommand() {
