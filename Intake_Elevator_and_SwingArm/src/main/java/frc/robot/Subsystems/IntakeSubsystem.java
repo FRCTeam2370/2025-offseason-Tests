@@ -55,9 +55,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
     if(hasCoral){
       IntakeRollers.set(0.025);
+      LEDSubsystem.hasCoralLEDAnim();
     }
     if(bowlSensor.getValue() < 70){
       hasAlgaeInBowl = true;
+      LEDSubsystem.hasAlgaeLEDAnim();
     }else{
       hasAlgaeInBowl = false;
     }

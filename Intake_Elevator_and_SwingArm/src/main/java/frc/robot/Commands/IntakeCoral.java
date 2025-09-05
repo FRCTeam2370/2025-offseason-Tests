@@ -35,7 +35,7 @@ public class IntakeCoral extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(IntakeSubsystem.getRollerCurrent() > 10){
+    if(IntakeSubsystem.getRollerCurrent() > 15){
       IntakeSubsystem.hasCoral = true;
       return true;
     }

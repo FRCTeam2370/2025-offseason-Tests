@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.IntakeAlgae;
 import frc.robot.Commands.IntakeAlgaeWithMech;
 import frc.robot.Commands.IntakeCoral;
+import frc.robot.Commands.IntakeCoralFromGround;
 import frc.robot.Commands.MoveElevatorIncrimentally;
 import frc.robot.Commands.MoveMechanism;
 import frc.robot.Commands.MechanismCommands.SetMechanismToPose;
@@ -27,6 +28,7 @@ import frc.robot.Commands.Drive.ResetGyro;
 import frc.robot.Commands.Drive.TeleopSwerve;
 import frc.robot.Subsystems.ElevatorSubsystem;
 import frc.robot.Subsystems.IntakeSubsystem;
+import frc.robot.Subsystems.LEDSubsystem;
 import frc.robot.Subsystems.ManipulatorSubsystem;
 import frc.robot.Subsystems.ShoulderSubsystem;
 import frc.robot.Subsystems.SwerveSubsystem;
@@ -39,6 +41,7 @@ public class RobotContainer {
   private static final ShoulderSubsystem mShoulderSubsystem = new ShoulderSubsystem();
   public static final TestingStateHandler mStateHandler = new TestingStateHandler(mElevatorSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mShoulderSubsystem);
   private static final SwerveSubsystem mSwerve = new SwerveSubsystem();
+  private static final LEDSubsystem mLEDSubsystem = new LEDSubsystem();
 
   public static CommandXboxController elevatorDriver = new CommandXboxController(0);
   public static CommandXboxController IntakeDriver = new CommandXboxController(1);
@@ -96,20 +99,21 @@ public class RobotContainer {
 
         //New Setpoint Commands 
 
-        driver.b().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -25));
+        driver.rightStick().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -25));
         driver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 11));
-        driver.x().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -89));
-        driver.povUp().onTrue(new MoveMechanism(0, 22, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        //driver.x().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -89));
+        driver.b().onTrue(new MoveMechanism(10, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.povDown().onTrue(new MoveMechanism(0, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.povLeft().onTrue(new MoveMechanism(0, 1, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.leftStick().onTrue(new MoveMechanism(0, 1, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.povRight().onTrue(new MoveMechanism(41, 30, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.rightTrigger().toggleOnTrue(new IntakeCoral(.4, mIntakeSubsystem));
-        driver.leftTrigger().whileTrue(new RunIntake(-0.5, mIntakeSubsystem));
-        driver.rightBumper().toggleOnTrue(new IntakeAlgae(.4, mManipulatorSubsystem));
+
+        driver.rightTrigger().toggleOnTrue(new IntakeCoralFromGround(.4, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.leftTrigger().whileTrue(new RunIntake(-0.25, mIntakeSubsystem));
+        driver.rightBumper().toggleOnTrue(new IntakeAlgae(.75, mManipulatorSubsystem));
         driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -1));
 
         driver.y().onTrue(new IntakeAlgaeWithMech(0.85, mIntakeSubsystem, mElevatorSubsystem, mShoulderSubsystem));
-        driver.back().onTrue(new YeetAlgae(mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem, mShoulderSubsystem));
+        driver.x().onTrue(new YeetAlgae(mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem, mShoulderSubsystem));
         //driver.back().onTrue(new StowWithAlgaeInBucket(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
   }
 
