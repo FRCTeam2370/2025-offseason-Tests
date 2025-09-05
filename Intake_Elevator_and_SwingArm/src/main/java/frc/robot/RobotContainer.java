@@ -101,6 +101,7 @@ public class RobotContainer {
 
         driver.rightStick().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -25));
         driver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 11));
+        driver.povLeft().onTrue(new SetShoulderPos(58, mShoulderSubsystem));
         //driver.x().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -89));
         driver.b().onTrue(new MoveMechanism(10, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.povDown().onTrue(new MoveMechanism(0, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
