@@ -65,6 +65,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
     elevatorMotor.getConfigurator().apply(elevatorConfig);
-    elevatorMotor.setNeutralMode(NeutralModeValue.Coast);
+    elevatorMotor.setNeutralMode(NeutralModeValue.Brake);
   }
 }

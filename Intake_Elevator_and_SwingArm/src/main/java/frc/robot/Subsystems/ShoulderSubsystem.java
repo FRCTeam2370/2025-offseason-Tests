@@ -50,7 +50,6 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   private static void configShoulder(){
     shoulderMotor.setPosition(0);
-    shoulderMotor.setNeutralMode(NeutralModeValue.Brake);
     shoulderConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
     shoulderConfig.Slot0.kP = 0.25;
@@ -65,5 +64,6 @@ public class ShoulderSubsystem extends SubsystemBase {
     shoulderConfig.MotionMagic.MotionMagicAcceleration = 170;// double your cruise velocity
 
     shoulderMotor.getConfigurator().apply(shoulderConfig);
+    shoulderMotor.setNeutralMode(NeutralModeValue.Brake);
   }
 }

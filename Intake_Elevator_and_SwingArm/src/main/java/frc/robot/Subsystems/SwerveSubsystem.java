@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -104,17 +106,17 @@ public class SwerveSubsystem extends SubsystemBase {
     configurePathPlanner();
 
     if(isBlue()){
-      poseEstimator = new SwerveDrivePoseEstimator(Constants.SwerveConstants.kinematics, gyro.getRotation2d(), getModulePositions(), new Pose2d(getPose().getTranslation(), gyro.getRotation2d()));
+      poseEstimator = new SwerveDrivePoseEstimator(Constants.SwerveConstants.kinematics, gyro.getRotation2d(), getModulePositions(), new Pose2d(getPose().getTranslation(), getYaw(90)));
     }else{
-      poseEstimator = new SwerveDrivePoseEstimator(Constants.SwerveConstants.kinematics, gyro.getRotation2d(), getModulePositions(), new Pose2d(getPose().getTranslation(), gyro.getRotation2d()));
+      poseEstimator = new SwerveDrivePoseEstimator(Constants.SwerveConstants.kinematics, gyro.getRotation2d(), getModulePositions(), new Pose2d(getPose().getTranslation(), getYaw(-90)));
     }
 
 
     resetGyro();
     if(SwerveSubsystem.isBlue()){
-      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), Rotation2d.fromDegrees(SwerveSubsystem.gyro.getYaw().getValueAsDouble())));
+      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), getYaw(90)));
     }else{
-      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), Rotation2d.fromDegrees(SwerveSubsystem.gyro.getYaw().getValueAsDouble() + 180)));
+      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), getYaw(-90)));
     }
     
     PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
@@ -162,8 +164,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
     //SmartDashboard.putNumber("limelight tx", LimelightHelpers.getTX("limelight"));
 
-    //TODO: put this back: updateOdometry();
-    updateOdometryButFRThisTime();
+    //TODO: put this back: 
+    updateOdometry();
+    //updateOdometryButFRThisTime();
     //odometry.update(getRotation2d(), getModulePositions());//USE THIS WHEN TESTING AUTOS WITHOUT FIELD LOCALIZATION
     resetOdometry(poseEstimator.getEstimatedPosition());
 
@@ -242,9 +245,9 @@ public class SwerveSubsystem extends SubsystemBase {
         
   }
 
-  public Rotation2d getYaw(){
+  public Rotation2d getYaw(double add){
     new Rotation2d();
-    return Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble());
+    return Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble() + add);
   }
 
   public double getHeading(){
@@ -266,7 +269,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void updateEstimatorWithPose(Pose3d pose, double timestampSeconds, Matrix<N3, N1> sdDevs){
-    poseEstimator.update(getYaw(), getModulePositions());
+    poseEstimator.update(getYaw(0), getModulePositions());
     if(sdDevs != null){
       poseEstimator.addVisionMeasurement(pose.toPose2d(), timestampSeconds, sdDevs);
     }else{
@@ -277,11 +280,11 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void updateOdometryButFRThisTime(){
-    poseEstimator.update(getYaw(), getModulePositions());
+    poseEstimator.update(getYaw(0), getModulePositions());
   }
 
   public void updateOdometry(){
-    poseEstimator.update(getYaw(), getModulePositions());
+    poseEstimator.update(getYaw(0), getModulePositions());
 
     boolean doRejectUpdate = false;
     Pose2d botPose;

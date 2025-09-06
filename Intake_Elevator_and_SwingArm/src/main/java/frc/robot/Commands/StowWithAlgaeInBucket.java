@@ -17,6 +17,6 @@ public class StowWithAlgaeInBucket extends SequentialCommandGroup {
   public StowWithAlgaeInBucket(IntakeSubsystem mIntakeSubsystem, ShoulderSubsystem mShoulderSubsystem, ElevatorSubsystem mElevatorSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new MoveMechanism(6.5, 2, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem), new SetIntakePosWithMagic(mIntakeSubsystem, -16));
+    addCommands(new MoveMechanism(6.5, 2, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
   }
 }
