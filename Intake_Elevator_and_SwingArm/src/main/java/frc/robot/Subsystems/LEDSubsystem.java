@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class LEDSubsystem extends SubsystemBase {
 
   //Sets Addresable LED Port and addresable LED strip length
-  private static final AddressableLED feedbackLEDs = new AddressableLED(0);
+  private static final AddressableLED feedbackLEDs = new AddressableLED(3);
   private static final AddressableLEDBuffer LEDBuffer = new AddressableLEDBuffer(22);
 
 

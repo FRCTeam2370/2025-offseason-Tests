@@ -36,14 +36,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class PhotonLocalization extends SubsystemBase {
-  public static PhotonCamera camera = new PhotonCamera(Constants.PhotonVisionConstants.cameraName);
-  public static PhotonCamera camera2 = new PhotonCamera(Constants.PhotonVisionConstants.cameraName2);
+  // public static PhotonCamera camera = new PhotonCamera(Constants.PhotonVisionConstants.cameraName);
+  // public static PhotonCamera camera2 = new PhotonCamera(Constants.PhotonVisionConstants.cameraName2);
 
-  private Matrix<N3, N1> curSdDevs1;
-  private Matrix<N3, N1> curSdDevs2;
+  public static frc.robot.PhotonCamera BRCam;
+  public static frc.robot.PhotonCamera BLCam;
+  public static frc.robot.PhotonCamera IntakeCam;
 
-  public static PhotonPoseEstimator poseEstimator;
-  public static PhotonPoseEstimator poseEstimator2;
+  // private Matrix<N3, N1> curSdDevs1;
+  // private Matrix<N3, N1> curSdDevs2;
+
+  // public static PhotonPoseEstimator poseEstimator;
+  // public static PhotonPoseEstimator poseEstimator2;
 
   public static Transform3d fieldToCamera;
 
@@ -52,10 +56,13 @@ public class PhotonLocalization extends SubsystemBase {
   private SwerveSubsystem mSwerveSubsystem;
   /** Creates a new PhotonLocalization. */
   public PhotonLocalization(SwerveSubsystem mSwerveSubsystem) {
-    poseEstimator = new PhotonPoseEstimator(Constants.PhotonVisionConstants.kTagLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, Constants.PhotonVisionConstants.camToRobot);
-    poseEstimator2 = new PhotonPoseEstimator(Constants.PhotonVisionConstants.kTagLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, Constants.PhotonVisionConstants.cam2ToRobot);
-    poseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
-    poseEstimator2.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+    // poseEstimator = new PhotonPoseEstimator(Constants.PhotonVisionConstants.kTagLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, Constants.PhotonVisionConstants.camToRobot);
+    // poseEstimator2 = new PhotonPoseEstimator(Constants.PhotonVisionConstants.kTagLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, Constants.PhotonVisionConstants.cam2ToRobot);
+    // poseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+    // poseEstimator2.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+    BRCam = new frc.robot.PhotonCamera(Constants.PhotonVisionConstants.BRCameraName, Constants.PhotonVisionConstants.BRCamToRobot);
+    BLCam = new frc.robot.PhotonCamera(Constants.PhotonVisionConstants.BLCameraName, Constants.PhotonVisionConstants.BLCamToRobot);
+    IntakeCam = new frc.robot.PhotonCamera(Constants.PhotonVisionConstants.IntakeCameraName, Constants.PhotonVisionConstants.IntakeCamToRobot);
 
     this.mSwerveSubsystem = mSwerveSubsystem;
   }
@@ -80,9 +87,13 @@ public class PhotonLocalization extends SubsystemBase {
     //     SmartDashboard.putNumber("Field to camera Rotation", fieldToCamera.getRotation().getAngle());
     //   }
     // }
-    checkCamera(camera, poseEstimator, curSdDevs1);
-    checkCamera(camera2, poseEstimator2, curSdDevs2);
+    // checkCamera(camera, poseEstimator, curSdDevs1);
+    // checkCamera(camera2, poseEstimator2, curSdDevs2);
     
+    //TODO: do this -> 
+    checkCamera(BRCam.camera, BRCam.poseEstimator, BRCam.curSdDevs);
+    checkCamera(BLCam.camera, BLCam.poseEstimator, BLCam.curSdDevs);
+    checkCamera(IntakeCam.camera, IntakeCam.poseEstimator, IntakeCam.curSdDevs);
       
   }
 

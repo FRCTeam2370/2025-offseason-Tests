@@ -21,6 +21,6 @@ public class StowMechanism extends SequentialCommandGroup {
   public StowMechanism(ElevatorSubsystem mElevatorSubsystem, ShoulderSubsystem mShoulderSubsystem, IntakeSubsystem mIntakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new MoveMechanism(0, 1, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem).andThen( new SetIntakePosWithMagic(mIntakeSubsystem, 0)));
+    addCommands(new MoveMechanism(0, 1, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem).andThen( new SetIntakePosWithMagic(mIntakeSubsystem, 0, true)));
   }
 }

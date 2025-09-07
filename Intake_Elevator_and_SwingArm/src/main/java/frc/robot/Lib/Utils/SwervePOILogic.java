@@ -240,8 +240,7 @@ public class SwervePOILogic {
               closest == distance6 ? Constants.BlueSidePoses.FAR_DESCORE : null;
           
           highAlgae = 
-              closest == distance1 || closest == distance4 || closest == distance5 ? true: 
-              closest == distance2 || closest == distance3 || closest == distance6 ? false : false;
+              (closest == distance1 || closest == distance4 || closest == distance5) ? true: false;
         }else{
           double distance1 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.CLOSE_DESCORE.getTranslation());
           double distance2 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.CLOSE_LEFT_DESCORE.getTranslation());
@@ -263,8 +262,7 @@ public class SwervePOILogic {
               closest == distance6 ? Constants.RedSidePoses.FAR_DESCORE : null;
           
           highAlgae = 
-              closest == distance1 || closest == distance4 || closest == distance5 ? true: 
-              closest == distance2 || closest == distance3 || closest == distance6 ? false : false;
+              (closest == distance1 || closest == distance4 || closest == distance5) ? true: false;
         }
         
         return Pair.of(returnPose, highAlgae);

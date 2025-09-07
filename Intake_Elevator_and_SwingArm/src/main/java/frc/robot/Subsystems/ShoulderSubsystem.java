@@ -64,6 +64,6 @@ public class ShoulderSubsystem extends SubsystemBase {
     shoulderConfig.MotionMagic.MotionMagicAcceleration = 170;// double your cruise velocity
 
     shoulderMotor.getConfigurator().apply(shoulderConfig);
-    shoulderMotor.setNeutralMode(NeutralModeValue.Brake);
+    shoulderMotor.setNeutralMode(NeutralModeValue.Coast);
   }
 }

@@ -17,6 +17,6 @@ public class IntakeCoralFromGround extends SequentialCommandGroup {
   public IntakeCoralFromGround(double speed, IntakeSubsystem mIntakeSubsystem, ShoulderSubsystem mShoulderSubsystem, ElevatorSubsystem mElevatorSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new SetIntakePosWithMagic(mIntakeSubsystem, -89).andThen(new IntakeCoral(speed, mIntakeSubsystem)).andThen(new MoveMechanism(0, 1, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem)));
+    addCommands(new SetIntakePosWithMagic(mIntakeSubsystem, -89, true).andThen(new IntakeCoral(speed, mIntakeSubsystem)).andThen(new MoveMechanism(0, 1, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem)));
   }
 }

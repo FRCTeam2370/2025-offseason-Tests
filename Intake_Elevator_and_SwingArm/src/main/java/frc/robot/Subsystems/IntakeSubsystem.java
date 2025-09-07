@@ -128,6 +128,6 @@ public class IntakeSubsystem extends SubsystemBase {
     pivotConfig.MotionMagic.MotionMagicAcceleration = 200;// double your cruise velocity
 
     IntakePivot.getConfigurator().apply(pivotConfig);
-    IntakePivot.setNeutralMode(NeutralModeValue.Brake);
+    IntakePivot.setNeutralMode(NeutralModeValue.Coast);
   }
 }

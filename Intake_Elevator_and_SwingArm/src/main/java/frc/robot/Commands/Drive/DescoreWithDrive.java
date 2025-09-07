@@ -2,28 +2,32 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands;
+package frc.robot.Commands.Drive;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
+import frc.robot.Commands.Descore;
+import frc.robot.Commands.IntakeAlgae;
 import frc.robot.RobotContainer.DescoreState;
 import frc.robot.Subsystems.ElevatorSubsystem;
 import frc.robot.Subsystems.IntakeSubsystem;
 import frc.robot.Subsystems.ManipulatorSubsystem;
 import frc.robot.Subsystems.ShoulderSubsystem;
-import frc.robot.Subsystems.SuperStructure;
 import frc.robot.Subsystems.SwerveSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Descore extends ParallelCommandGroup {
-  private Command descoreCommand;
-  /** Creates a new Descore. */
-  public Descore(ShoulderSubsystem mShoulderSubsystem, IntakeSubsystem mIntakeSubsystem, ManipulatorSubsystem mManipulatorSubsystem, ElevatorSubsystem mElevatorSubsystem) {
+public class DescoreWithDrive extends SequentialCommandGroup {
+  /** Creates a new DescoreWithDrive. */
+  public DescoreWithDrive(SwerveSubsystem mSwerveSubsystem, DoubleSupplier xSup, Supplier<Pose2d> pose) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new MoveMechanism(SuperStructure.getDescoreSetpoints().getFirst(), SuperStructure.getDescoreSetpoints().getSecond(), true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem), new IntakeAlgae(0.75, mManipulatorSubsystem));
+    addCommands(mSwerveSubsystem.PathfindToPose(pose), new TeleopSwerve(mSwerveSubsystem, xSup, ()-> 0, ()-> 0, ()-> true));
   }
 }

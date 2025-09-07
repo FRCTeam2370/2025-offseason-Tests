@@ -23,6 +23,7 @@ import frc.robot.Commands.MoveElevatorIncrimentally;
 import frc.robot.Commands.MoveMechanism;
 import frc.robot.Commands.MechanismCommands.SetMechanismToPose;
 import frc.robot.Commands.MechanismCommands.StowMechanism;
+import frc.robot.Lib.Utils.SwervePOILogic;
 import frc.robot.Commands.RunIntake;
 import frc.robot.Commands.RunManipulator;
 import frc.robot.Commands.SetIntakePosWithMagic;
@@ -30,13 +31,16 @@ import frc.robot.Commands.SetShoulderPos;
 import frc.robot.Commands.StowWithAlgaeInBucket;
 import frc.robot.Commands.YeetAlgae;
 import frc.robot.Commands.elevatorSetPos;
+import frc.robot.Commands.Drive.DescoreWithDrive;
 import frc.robot.Commands.Drive.ResetGyro;
 import frc.robot.Commands.Drive.TeleopSwerve;
 import frc.robot.Subsystems.ElevatorSubsystem;
 import frc.robot.Subsystems.IntakeSubsystem;
 import frc.robot.Subsystems.LEDSubsystem;
 import frc.robot.Subsystems.ManipulatorSubsystem;
+import frc.robot.Subsystems.PhotonLocalization;
 import frc.robot.Subsystems.ShoulderSubsystem;
+import frc.robot.Subsystems.SuperStructure;
 import frc.robot.Subsystems.SwerveSubsystem;
 import frc.robot.Subsystems.TestingStateHandler;
 
@@ -48,8 +52,11 @@ public class RobotContainer {
   public static final TestingStateHandler mStateHandler = new TestingStateHandler(mElevatorSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mShoulderSubsystem);
   private static final SwerveSubsystem mSwerve = new SwerveSubsystem();
   private static final LEDSubsystem mLEDSubsystem = new LEDSubsystem();
+  private static final PhotonLocalization mLocalization = new PhotonLocalization(mSwerve);
+  private static final SuperStructure mSuperStructure = new SuperStructure(mIntakeSubsystem, mElevatorSubsystem, mManipulatorSubsystem, mShoulderSubsystem);
 
   public static CommandXboxController driver = new CommandXboxController(0);
+  public static CommandXboxController operator = new CommandXboxController(1);
 
   private final SendableChooser<Command> autoChooser;
 
@@ -64,12 +71,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("Low Descore Forward", new MoveMechanism(0, 15, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
     NamedCommands.registerCommand("UP Descore Forward", new MoveMechanism(15, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
     NamedCommands.registerCommand("Intake Algae", new IntakeAlgae(0.75, mManipulatorSubsystem));
-    NamedCommands.registerCommand("Score L1", new SetIntakePosWithMagic(mIntakeSubsystem, -20));
+    NamedCommands.registerCommand("Score L1", new SetIntakePosWithMagic(mIntakeSubsystem, -20, true));
     NamedCommands.registerCommand("Spit Coral", new RunIntake(-0.25, mIntakeSubsystem));
     NamedCommands.registerCommand("Stop Intake", new RunIntake(0, mIntakeSubsystem));
     NamedCommands.registerCommand("Stow", new MoveMechanism(0, 1, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
     NamedCommands.registerCommand("Yeet", new YeetAlgae(mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem, mShoulderSubsystem));
-    NamedCommands.registerCommand("Stow Intake", new SetIntakePosWithMagic(mIntakeSubsystem, 0));
+    NamedCommands.registerCommand("Stow Intake", new SetIntakePosWithMagic(mIntakeSubsystem, 0, true));
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -122,15 +129,17 @@ public class RobotContainer {
         // driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -0.75));
 
         //New Setpoint Commands 
-
-        driver.rightStick().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -25));
-        driver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 11));
+        //TODO: fix DESCORE!!!!!!!!!
+        driver.rightStick().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -25, true));
+        driver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 11, false));
         driver.povLeft().onTrue(new SetShoulderPos(58, mShoulderSubsystem));
         //driver.x().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -89));
-        driver.b().onTrue(new Descore(DescoreState.UP, mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem));//new MoveMechanism(10, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.povDown().onTrue(new Descore(DescoreState.LOWER, mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem));//new MoveMechanism(0, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.b().onTrue(new Descore(mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem));//new MoveMechanism(10, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        //driver.povDown().onTrue(new Descore(mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem));//new MoveMechanism(0, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.leftStick().onTrue(new MoveMechanism(0, 1, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.povRight().onTrue(new MoveMechanism(41, 30, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.povUp().toggleOnTrue(new DescoreWithDrive(mSwerve, ()-> -driver.getRawAxis(1), ()-> SwervePOILogic.findNearestDescore().getFirst()).alongWith(new Descore(mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem)));
+        operator.a().whileTrue(mSwerve.PathfindToPose(()-> Constants.BlueSidePoses.CLOSE_DESCORE));
 
         driver.rightTrigger().toggleOnTrue(new IntakeCoralFromGround(.4, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.leftTrigger().whileTrue(new RunIntake(-0.25, mIntakeSubsystem));

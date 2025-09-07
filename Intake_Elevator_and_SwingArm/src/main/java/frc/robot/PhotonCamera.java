@@ -22,50 +22,14 @@ import edu.wpi.first.math.numbers.N3;
 
 /** Add your docs here. */
 public class PhotonCamera {
-    org.photonvision.PhotonCamera camera;
-    PhotonPoseEstimator poseEstimator;
+    public org.photonvision.PhotonCamera camera;
+    public PhotonPoseEstimator poseEstimator;
 
-    Matrix<N3, N1> curSdDevs;
+    public Matrix<N3, N1> curSdDevs;
 
     public PhotonCamera(String cameraName, Transform3d camToRobot){
         camera = new org.photonvision.PhotonCamera(cameraName);
         poseEstimator = new PhotonPoseEstimator(Constants.PhotonVisionConstants.kTagLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, camToRobot);
         poseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
-    }
-
-    private Matrix<N3, N1> getEstSdDevs(Optional<EstimatedRobotPose> estimatedPose, List<PhotonTrackedTarget> results){
-    if(estimatedPose.isEmpty()){
-      curSdDevs = Constants.PhotonVisionConstants.kSingleTagStdDevs;
-      return curSdDevs;
-        }else{
-            var estSdDevs = Constants.PhotonVisionConstants.kSingleTagStdDevs;
-            int numTags = 0;
-            double avgDist = 0;
-
-            for(var change : results){
-                var tagPose = poseEstimator.getFieldTags().getTagPose(change.getFiducialId());
-                if(tagPose.isEmpty()) continue; 
-
-                numTags ++;
-                avgDist += tagPose.get().toPose2d().getTranslation().getDistance(estimatedPose.get().estimatedPose.toPose2d().getTranslation());
-            }
-
-            if(numTags == 0){
-                curSdDevs = Constants.PhotonVisionConstants.kSingleTagStdDevs;
-            }else{
-                avgDist /= numTags;
-                
-                if(numTags > 1){
-                    curSdDevs = Constants.PhotonVisionConstants.kMultiTagStdDevs;
-                }
-                if(numTags == 1 && avgDist > 4){
-                    estSdDevs = VecBuilder.fill(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
-                }else{
-                    estSdDevs = estSdDevs.times(1 + (avgDist * avgDist / 30));
-                    curSdDevs = estSdDevs;
-                }
-            }
-        return curSdDevs;
-        }
     }
 }

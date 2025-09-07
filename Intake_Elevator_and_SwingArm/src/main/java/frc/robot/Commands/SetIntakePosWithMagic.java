@@ -16,9 +16,14 @@ public class SetIntakePosWithMagic extends Command {
   private double min, max;
 
   /** Creates a new SetIntakePosWithMagic. */
-  public SetIntakePosWithMagic(IntakeSubsystem mIntakeSubsystem, double pos) {
+  public SetIntakePosWithMagic(IntakeSubsystem mIntakeSubsystem, double pos, boolean shouldUseConstraints) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.pos = pos < Constants.MechanismConstants.maxIntakeVal ? Constants.MechanismConstants.maxIntakeVal : pos > Constants.MechanismConstants.minElevatorVal ? Constants.MechanismConstants.minElevatorVal : pos;
+    if(shouldUseConstraints){
+      this.pos = pos < Constants.MechanismConstants.maxIntakeVal ? Constants.MechanismConstants.maxIntakeVal : pos > Constants.MechanismConstants.minElevatorVal ? Constants.MechanismConstants.minElevatorVal : pos;
+    }else{
+      this.pos = pos;
+    }
+    
     addRequirements(mIntakeSubsystem);
   }
 

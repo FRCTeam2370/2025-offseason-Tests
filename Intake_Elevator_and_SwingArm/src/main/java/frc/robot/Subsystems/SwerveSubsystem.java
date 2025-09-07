@@ -50,7 +50,9 @@ import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
+import frc.robot.RobotContainer.DescoreState;
 import frc.robot.SwerveModule;
+import frc.robot.Commands.MoveMechanism;
 import frc.robot.Lib.Utils.SwervePOILogic;
 
 public class SwerveSubsystem extends SubsystemBase {
@@ -106,17 +108,17 @@ public class SwerveSubsystem extends SubsystemBase {
     configurePathPlanner();
 
     if(isBlue()){
-      poseEstimator = new SwerveDrivePoseEstimator(Constants.SwerveConstants.kinematics, gyro.getRotation2d(), getModulePositions(), new Pose2d(getPose().getTranslation(), getYaw(90)));
+      poseEstimator = new SwerveDrivePoseEstimator(Constants.SwerveConstants.kinematics, gyro.getRotation2d(), getModulePositions(), new Pose2d(getPose().getTranslation(), getYaw(0)));
     }else{
-      poseEstimator = new SwerveDrivePoseEstimator(Constants.SwerveConstants.kinematics, gyro.getRotation2d(), getModulePositions(), new Pose2d(getPose().getTranslation(), getYaw(-90)));
+      poseEstimator = new SwerveDrivePoseEstimator(Constants.SwerveConstants.kinematics, gyro.getRotation2d(), getModulePositions(), new Pose2d(getPose().getTranslation(), getYaw(0)));
     }
 
 
     resetGyro();
     if(SwerveSubsystem.isBlue()){
-      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), getYaw(90)));
+      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), getYaw(0)));
     }else{
-      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), getYaw(-90)));
+      resetOdometry(new Pose2d(SwerveSubsystem.poseEstimator.getEstimatedPosition().getTranslation(), getYaw(0)));
     }
     
     PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
@@ -165,8 +167,8 @@ public class SwerveSubsystem extends SubsystemBase {
     //SmartDashboard.putNumber("limelight tx", LimelightHelpers.getTX("limelight"));
 
     //TODO: put this back: 
-    updateOdometry();
-    //updateOdometryButFRThisTime();
+    //updateOdometry();
+    updateOdometryButFRThisTime();
     //odometry.update(getRotation2d(), getModulePositions());//USE THIS WHEN TESTING AUTOS WITHOUT FIELD LOCALIZATION
     resetOdometry(poseEstimator.getEstimatedPosition());
 
@@ -202,6 +204,7 @@ public class SwerveSubsystem extends SubsystemBase {
     
   //   // return Pair.of(SwingArmSubsystem.swingArmPos, elevatorPos);
   // }
+  
 
   public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop){
     SwerveModuleState[] swerveModuleStates = Constants.SwerveConstants.kinematics.toSwerveModuleStates(
@@ -241,7 +244,7 @@ public class SwerveSubsystem extends SubsystemBase {
     resetGyro();
   }
   public static void resetGyro(){
-    gyro.setYaw(270);//
+    gyro.setYaw(0);//
         
   }
 
@@ -252,9 +255,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public double getHeading(){
     if(isBlue()){
-      return Math.IEEEremainder(gyro.getRotation2d().getDegrees(), 360);
+      return Math.IEEEremainder(gyro.getRotation2d().getDegrees() - 90, 360);
     }else{
-      return Math.IEEEremainder(gyro.getRotation2d().getDegrees() + 180, 360);
+      return Math.IEEEremainder(gyro.getRotation2d().getDegrees() + 90, 360);
     }
     
   }

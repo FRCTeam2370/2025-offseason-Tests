@@ -46,7 +46,6 @@ public class MoveMechanism extends Command {
     curShoulderPos = ShoulderSubsystem.getShoulderPos();
 
     //Logic to determine whether or not to move the intake on start
-
     //First see if there is an algae in the Manipulator
     if(ManipulatorSubsystem.hasAlgae){
         //We first determine if the desired elevator position is >= than E (variables explained in Constants)

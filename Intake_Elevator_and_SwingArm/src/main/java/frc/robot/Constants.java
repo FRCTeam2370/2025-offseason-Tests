@@ -6,6 +6,8 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.Rotation;
 
+import javax.xml.crypto.dsig.Transform;
+
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.pathplanner.lib.path.PathConstraints;
@@ -90,16 +92,25 @@ public final class Constants {
 
         public static final double ReefTagHeights = Units.inchesToMeters(12);
 
-        public static final String cameraName = "PhotonCamera";
-        public static final String cameraName2 = "PhotonCamera2";
+        // public static final String cameraName = "PhotonCamera";
+        // public static final String cameraName2 = "PhotonCamera2";
+
+        public static final String BLCameraName = "BL Cam";
+        public static final Transform3d BLCamToRobot = new Transform3d(0.244475,-0.22225,0.2159, new Rotation3d(0, Math.toRadians(-10), Math.toRadians(-45)));
+
+        public static final String BRCameraName = "BR Cam";
+        public static final Transform3d BRCamToRobot = new Transform3d(0.244475,0.22225,0.2159, new Rotation3d(0, Math.toRadians(-10), Math.toRadians(45)));
+
+        public static final String IntakeCameraName = "IntakeCam";
+        public static final Transform3d IntakeCamToRobot = new Transform3d(0,0,0.2159 +0.053975, new Rotation3d(0, Math.toRadians(-20), Math.toRadians(180)));
 
         public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
         public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
 
         public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark);
 
-        public static final Transform3d camToRobot = new Transform3d(-0.1524, 0.14605, 0.3175, new Rotation3d(0, 0, Math.toRadians(-47)/*the math here is -43(the degrees that the camera is at relative to one side of the robot) + 90 (because we reset the gyro to be 90 degrees off) */));
-        public static final Transform3d cam2ToRobot = new Transform3d(-0.2032, 0.2667, 0.4064, new Rotation3d(0,0,Math.toRadians(-90)));
+        //public static final Transform3d camToRobot = new Transform3d(-0.1524, 0.14605, 0.3175, new Rotation3d(0, 0, Math.toRadians(-47)/*the math here is -43(the degrees that the camera is at relative to one side of the robot) + 90 (because we reset the gyro to be 90 degrees off) */));
+        //public static final Transform3d cam2ToRobot = new Transform3d(-0.2032, 0.2667, 0.4064, new Rotation3d(0,0,Math.toRadians(-90)));
     }
 
     public static class SwerveConstants {
@@ -187,35 +198,36 @@ public final class Constants {
         public static final Pose2d LEFT_LOADING_RIGHT = new Pose2d(0.61,6.68, Rotation2d.fromDegrees(36));//-140.93
         public static final Pose2d LEFT_LOADING_LEFT = new Pose2d(1.42, 7.37, Rotation2d.fromDegrees(36));//-138// better
 
+        //Scoring poses
         public static final Pose2d CLOSE_SCORE_RIGHT = new Pose2d(3.23, 3.58, Rotation2d.fromDegrees(90));
         public static final Pose2d CLOSE_SCORE_LEFT = new Pose2d(3.24, 3.91, Rotation2d.fromDegrees(90));
         public static final Pose2d CLOSE_REVERSE_DESCORE = new Pose2d(3.3, 4.27, Rotation2d.fromDegrees(-90));
-        public static final Pose2d CLOSE_DESCORE = new Pose2d(3.225, 3.82, Rotation2d.fromDegrees(90));
+        public static final Pose2d CLOSE_DESCORE = new Pose2d(2.889, 4.019, Rotation2d.fromDegrees(180));
 
         public static final Pose2d CLOSE_LEFT_SCORE_RIGHT = new Pose2d(3.48, 4.85, Rotation2d.fromDegrees(33.02));
         public static final Pose2d CLOSE_LEFT_SCORE_LEFT = new Pose2d(3.81, 5.04, Rotation2d.fromDegrees(30));//35/02
         public static final Pose2d CLOSE_LEFT_REVERSE_DESCORE = new Pose2d(4.22, 5.2, Rotation2d.fromDegrees(-150));//-143.33
-        public static final Pose2d CLOSE_LEFT_DESCORE = new Pose2d(3.668, 4.99, Rotation2d.fromDegrees(30));
+        public static final Pose2d CLOSE_LEFT_DESCORE = new Pose2d(3.704, 5.400, Rotation2d.fromDegrees(119.520));
 
         public static final Pose2d FAR_LEFT_SCORE_RIGHT = new Pose2d(4.75, 5.3, Rotation2d.fromDegrees(-29));
         public static final Pose2d FAR_LEFT_SCORE_LEFT = new Pose2d(5.11, 5.15, Rotation2d.fromDegrees(-30));
         public static final Pose2d FAR_LEFT_REVERSE_DESCORE = new Pose2d(5.22, 4.96, Rotation2d.fromDegrees(150));
-        public static final Pose2d FAR_LEFT_DESCORE = new Pose2d(4.927, 5.218, Rotation2d.fromDegrees(-30));
+        public static final Pose2d FAR_LEFT_DESCORE = new Pose2d(5.311, 5.410, Rotation2d.fromDegrees(60.502));
 
         public static final Pose2d FAR_SCORE_RIGHT = new Pose2d(5.71, 4.42, Rotation2d.fromDegrees(-90));
         public static final Pose2d FAR_SCORE_LEFT = new Pose2d(5.72, 4.07, Rotation2d.fromDegrees(-90));
         public static final Pose2d FAR_REVERSE_DESCORE = new Pose2d(5.83, 3.78, Rotation2d.fromDegrees(90));
-        public static final Pose2d FAR_DESCORE = new Pose2d(5.73, 4.235, Rotation2d.fromDegrees(-91.24));
+        public static final Pose2d FAR_DESCORE = new Pose2d(6, 4, Rotation2d.fromDegrees(0));
 
         public static final Pose2d FAR_RIGHT_SCORE_RIGHT = new Pose2d(5.45, 3.21, Rotation2d.fromDegrees(-150));
         public static final Pose2d FAR_RIGHT_SCORE_LEFT = new Pose2d(5.13, 2.94, Rotation2d.fromDegrees(-149));
         public static final Pose2d FAR_RIGHT_REVERSE_DESCORE = new Pose2d(4.84, 2.89, Rotation2d.fromDegrees(36));
-        public static final Pose2d FAR_RIGHT_DESCORE = new Pose2d(5.323, 3.06, Rotation2d.fromDegrees(-150));
+        public static final Pose2d FAR_RIGHT_DESCORE = new Pose2d(5.311, 2.628, Rotation2d.fromDegrees(-60.502));
         
         public static final Pose2d CLOSE_RIGHT_SCORE_RIGHT = new Pose2d(4.24, 2.74, Rotation2d.fromDegrees(145.83));
         public static final Pose2d CLOSE_RIGHT_SCORE_LEFT = new Pose2d(3.92, 2.86, Rotation2d.fromDegrees(149.83));
         public static final Pose2d CLOSE_RIGHT_REVERSE_DESCORE = new Pose2d(3.68, 3.12, Rotation2d.fromDegrees(-30));
-        public static final Pose2d CLOSE_RIGHT_DESCORE = new Pose2d(4.052, 2.832, Rotation2d.fromDegrees(150));
+        public static final Pose2d CLOSE_RIGHT_DESCORE = new Pose2d(3.704, 2.616, Rotation2d.fromDegrees(-119.520));
 
         public static final Pose2d PROCESSOR = new Pose2d(6.12, 0.72, Rotation2d.fromDegrees(-180));
     }
