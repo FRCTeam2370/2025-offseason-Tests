@@ -177,7 +177,7 @@ public class SwerveSubsystem extends SubsystemBase {
     posePublisher.set(new Pose2d[] {poseEstimator.getEstimatedPosition()});
 
     descoreCompare = Math.abs(SwervePOILogic.findNearestDescore().getFirst().getRotation().getDegrees() - poseEstimator.getEstimatedPosition().getRotation().getDegrees());
-    reverseDescoreCompare = Math.abs(SwervePOILogic.findNearestReverseDescore().getFirst().getRotation().getDegrees() - poseEstimator.getEstimatedPosition().getRotation().getDegrees());
+    //reverseDescoreCompare = Math.abs(SwervePOILogic.findNearestReverseDescore().getFirst().getRotation().getDegrees() - poseEstimator.getEstimatedPosition().getRotation().getDegrees());
     closerToDescore = descoreCompare < reverseDescoreCompare;
 
     SmartDashboard.putNumber("descoreCompare", descoreCompare);

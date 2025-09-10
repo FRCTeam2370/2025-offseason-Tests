@@ -34,6 +34,9 @@ public class SuperStructure extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putString("Descore State", getDescoreState().toString());
+    SmartDashboard.putNumber("Descore Elevator Setpoint", getDescoreSetpoints().getFirst());
+    SmartDashboard.putNumber("Descore Shoulder Setpoint", getDescoreSetpoints().getSecond());
+    updateDescoreState();
   }
 
   public static DescoreState getDescoreState(){
@@ -43,6 +46,22 @@ public class SuperStructure extends SubsystemBase {
       descoreState = DescoreState.LOWER;
     }
     return descoreState;
+  }
+
+  public static void updateDescoreState(){
+    if(SwervePOILogic.findNearestDescore().getSecond() == true){
+      descoreState = DescoreState.UP;
+    }else{
+      descoreState = DescoreState.LOWER;
+    }
+  }
+
+  public Command GetDescoreCommand(){
+    if(SuperStructure.descoreState == DescoreState.UP){
+      return new MoveMechanism(15, SuperStructure.getDescoreSetpoints().getSecond(), true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem);
+    }else{
+      return new MoveMechanism(0, SuperStructure.getDescoreSetpoints().getSecond(), true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem);
+    }
   }
 
   public static Pair<Double, Double> getDescoreSetpoints(){

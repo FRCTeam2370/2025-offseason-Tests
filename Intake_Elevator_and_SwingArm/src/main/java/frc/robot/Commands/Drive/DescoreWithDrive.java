@@ -17,6 +17,7 @@ import frc.robot.RobotContainer.DescoreState;
 import frc.robot.Subsystems.ElevatorSubsystem;
 import frc.robot.Subsystems.IntakeSubsystem;
 import frc.robot.Subsystems.ManipulatorSubsystem;
+import frc.robot.Subsystems.PhotonLocalization;
 import frc.robot.Subsystems.ShoulderSubsystem;
 import frc.robot.Subsystems.SwerveSubsystem;
 
@@ -28,6 +29,7 @@ public class DescoreWithDrive extends SequentialCommandGroup {
   public DescoreWithDrive(SwerveSubsystem mSwerveSubsystem, DoubleSupplier xSup, Supplier<Pose2d> pose) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(mSwerveSubsystem.PathfindToPose(pose), new TeleopSwerve(mSwerveSubsystem, xSup, ()-> 0, ()-> 0, ()-> true));
+    //TODO: add pid to the rotation
+    addCommands(mSwerveSubsystem.PathfindToPose(pose), new TeleopSwerve(mSwerveSubsystem, xSup, ()-> PhotonLocalization.intakeCamToTagY, ()-> -PhotonLocalization.intakeCamToTagRotation * 2, ()-> true));
   }
 }

@@ -129,16 +129,17 @@ public class RobotContainer {
         // driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -0.75));
 
         //New Setpoint Commands 
-        //TODO: fix DESCORE!!!!!!!!!
+        //TODO: add pid to the rotation
         driver.rightStick().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -25, true));
         driver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 11, false));
         driver.povLeft().onTrue(new SetShoulderPos(58, mShoulderSubsystem));
         //driver.x().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -89));
-        driver.b().onTrue(new Descore(mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem));//new MoveMechanism(10, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        driver.b().onTrue(new Descore(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem).alongWith(new IntakeAlgae(0.75, mManipulatorSubsystem)));//new Descore(mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem));//new MoveMechanism(10, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        operator.x().onTrue(new MoveMechanism(0, 15, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         //driver.povDown().onTrue(new Descore(mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem));//new MoveMechanism(0, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.leftStick().onTrue(new MoveMechanism(0, 1, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.povRight().onTrue(new MoveMechanism(41, 30, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.povUp().toggleOnTrue(new DescoreWithDrive(mSwerve, ()-> -driver.getRawAxis(1), ()-> SwervePOILogic.findNearestDescore().getFirst()).alongWith(new Descore(mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem)));
+        driver.povUp().toggleOnTrue(new DescoreWithDrive(mSwerve, ()-> -driver.getRawAxis(1), ()-> SwervePOILogic.findNearestDescore().getFirst()).alongWith(new Descore(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem)).alongWith(new IntakeAlgae(0.75, mManipulatorSubsystem)));
         operator.a().whileTrue(mSwerve.PathfindToPose(()-> Constants.BlueSidePoses.CLOSE_DESCORE));
 
         driver.rightTrigger().toggleOnTrue(new IntakeCoralFromGround(.4, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));

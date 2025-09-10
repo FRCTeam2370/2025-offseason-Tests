@@ -43,6 +43,9 @@ public class PhotonLocalization extends SubsystemBase {
   public static frc.robot.PhotonCamera BLCam;
   public static frc.robot.PhotonCamera IntakeCam;
 
+  public static double intakeCamToTagY;
+  public static double intakeCamToTagRotation;
+
   // private Matrix<N3, N1> curSdDevs1;
   // private Matrix<N3, N1> curSdDevs2;
 
@@ -90,11 +93,35 @@ public class PhotonLocalization extends SubsystemBase {
     // checkCamera(camera, poseEstimator, curSdDevs1);
     // checkCamera(camera2, poseEstimator2, curSdDevs2);
     
-    //TODO: do this -> 
+    //Good stuff
     checkCamera(BRCam.camera, BRCam.poseEstimator, BRCam.curSdDevs);
     checkCamera(BLCam.camera, BLCam.poseEstimator, BLCam.curSdDevs);
-    checkCamera(IntakeCam.camera, IntakeCam.poseEstimator, IntakeCam.curSdDevs);
+    //checkCamera(IntakeCam.camera, IntakeCam.poseEstimator, IntakeCam.curSdDevs);
+    checkIntakeCam();
+    //updateIntakeOffsetDistance();
+    SmartDashboard.putNumber("IntakeCamToTagY", intakeCamToTagY);
+    SmartDashboard.putNumber("Camto Tag rotation offset", intakeCamToTagRotation);
       
+  }
+
+  public void checkIntakeCam(){
+    var results = IntakeCam.camera.getAllUnreadResults();
+    Optional<EstimatedRobotPose> visionEst = Optional.empty();
+    for(var change : results){
+      if(change.hasTargets()){
+        intakeCamToTagY = change.getBestTarget().getBestCameraToTarget().getY();
+        double rotation = change.getBestTarget().getBestCameraToTarget().getRotation().getZ();
+        if(rotation >= 0){
+          intakeCamToTagRotation = rotation - Math.PI;
+        }else{
+          intakeCamToTagRotation = rotation + Math.PI;
+        }
+         
+        visionEst = IntakeCam.poseEstimator.update(change);
+        
+        mSwerveSubsystem.updateEstimatorWithPose(visionEst.get().estimatedPose, change.getTimestampSeconds(), getEstSdDevs(visionEst, change.getTargets(), IntakeCam.poseEstimator, IntakeCam.curSdDevs));
+      }
+    }
   }
 
   public static Translation2d getTranslation(){

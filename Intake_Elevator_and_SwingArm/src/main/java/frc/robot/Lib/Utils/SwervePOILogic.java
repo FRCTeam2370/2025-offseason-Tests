@@ -158,61 +158,61 @@ public class SwervePOILogic {
         return returnPose;
     }
 
-    public static Pair<Pose2d,Boolean> findNearestReverseDescore(){
-        Pose2d currentPose = SwerveSubsystem.poseEstimator.getEstimatedPosition();
-        Pose2d returnPose;
-        Boolean highAlgae;
+    // public static Pair<Pose2d,Boolean> findNearestReverseDescore(){
+    //     Pose2d currentPose = SwerveSubsystem.poseEstimator.getEstimatedPosition();
+    //     Pose2d returnPose;
+    //     Boolean highAlgae;
 
-        if(SwerveSubsystem.isBlue()){
-          double distance1 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.CLOSE_REVERSE_DESCORE.getTranslation());
-          double distance2 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.CLOSE_LEFT_REVERSE_DESCORE.getTranslation());
-          double distance3 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.CLOSE_RIGHT_REVERSE_DESCORE.getTranslation());
-          double distance4 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.FAR_LEFT_REVERSE_DESCORE.getTranslation());
-          double distance5 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.FAR_RIGHT_REVERSE_DESCORE.getTranslation());
-          double distance6 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.FAR_REVERSE_DESCORE.getTranslation());
+    //     if(SwerveSubsystem.isBlue()){
+    //       double distance1 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.CLOSE_REVERSE_DESCORE.getTranslation());
+    //       double distance2 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.CLOSE_LEFT_REVERSE_DESCORE.getTranslation());
+    //       double distance3 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.CLOSE_RIGHT_REVERSE_DESCORE.getTranslation());
+    //       double distance4 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.FAR_LEFT_REVERSE_DESCORE.getTranslation());
+    //       double distance5 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.FAR_RIGHT_REVERSE_DESCORE.getTranslation());
+    //       double distance6 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.BlueSidePoses.FAR_REVERSE_DESCORE.getTranslation());
 
-          List<Double> distances = Arrays.asList(distance1, distance2, distance3, distance4, distance5, distance6);
+    //       List<Double> distances = Arrays.asList(distance1, distance2, distance3, distance4, distance5, distance6);
 
-          double closest = Collections.min(distances);
+    //       double closest = Collections.min(distances);
 
-          returnPose = 
-              closest == distance1 ? Constants.BlueSidePoses.CLOSE_REVERSE_DESCORE : 
-              closest == distance2 ? Constants.BlueSidePoses.CLOSE_LEFT_REVERSE_DESCORE :
-              closest == distance3 ? Constants.BlueSidePoses.CLOSE_RIGHT_REVERSE_DESCORE : 
-              closest == distance4 ? Constants.BlueSidePoses.FAR_LEFT_REVERSE_DESCORE :
-              closest == distance5 ? Constants.BlueSidePoses.FAR_RIGHT_REVERSE_DESCORE :
-              closest == distance6 ? Constants.BlueSidePoses.FAR_REVERSE_DESCORE : null;
+    //       returnPose = 
+    //           closest == distance1 ? Constants.BlueSidePoses.CLOSE_REVERSE_DESCORE : 
+    //           closest == distance2 ? Constants.BlueSidePoses.CLOSE_LEFT_REVERSE_DESCORE :
+    //           closest == distance3 ? Constants.BlueSidePoses.CLOSE_RIGHT_REVERSE_DESCORE : 
+    //           closest == distance4 ? Constants.BlueSidePoses.FAR_LEFT_REVERSE_DESCORE :
+    //           closest == distance5 ? Constants.BlueSidePoses.FAR_RIGHT_REVERSE_DESCORE :
+    //           closest == distance6 ? Constants.BlueSidePoses.FAR_REVERSE_DESCORE : null;
 
-          highAlgae = 
-              closest == distance1 || closest == distance4 || closest == distance5 ? true: 
-              closest == distance2 || closest == distance3 || closest == distance6 ? false : false;
-        }else{
-          double distance1 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.CLOSE_REVERSE_DESCORE.getTranslation());
-          double distance2 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.CLOSE_LEFT_REVERSE_DESCORE.getTranslation());
-          double distance3 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.CLOSE_RIGHT_REVERSE_DESCORE.getTranslation());
-          double distance4 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.FAR_LEFT_REVERSE_DESCORE.getTranslation());
-          double distance5 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.FAR_RIGHT_REVERSE_DESCORE.getTranslation());
-          double distance6 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.FAR_REVERSE_DESCORE.getTranslation());
+    //       highAlgae = 
+    //           closest == distance1 || closest == distance4 || closest == distance5 ? true: 
+    //           closest == distance2 || closest == distance3 || closest == distance6 ? false : false;
+    //     }else{
+    //       double distance1 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.CLOSE_REVERSE_DESCORE.getTranslation());
+    //       double distance2 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.CLOSE_LEFT_REVERSE_DESCORE.getTranslation());
+    //       double distance3 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.CLOSE_RIGHT_REVERSE_DESCORE.getTranslation());
+    //       double distance4 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.FAR_LEFT_REVERSE_DESCORE.getTranslation());
+    //       double distance5 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.FAR_RIGHT_REVERSE_DESCORE.getTranslation());
+    //       double distance6 = findDistanceBetweenAB(currentPose.getTranslation(), Constants.RedSidePoses.FAR_REVERSE_DESCORE.getTranslation());
 
-          List<Double> distances = Arrays.asList(distance1, distance2, distance3, distance4, distance5, distance6);
+    //       List<Double> distances = Arrays.asList(distance1, distance2, distance3, distance4, distance5, distance6);
 
-          double closest = Collections.min(distances);
+    //       double closest = Collections.min(distances);
 
-          returnPose = 
-              closest == distance1 ? Constants.RedSidePoses.CLOSE_REVERSE_DESCORE : 
-              closest == distance2 ? Constants.RedSidePoses.CLOSE_LEFT_REVERSE_DESCORE :
-              closest == distance3 ? Constants.RedSidePoses.CLOSE_RIGHT_REVERSE_DESCORE : 
-              closest == distance4 ? Constants.RedSidePoses.FAR_LEFT_REVERSE_DESCORE :
-              closest == distance5 ? Constants.RedSidePoses.FAR_RIGHT_REVERSE_DESCORE :
-              closest == distance6 ? Constants.RedSidePoses.FAR_REVERSE_DESCORE : null;
+    //       returnPose = 
+    //           closest == distance1 ? Constants.RedSidePoses.CLOSE_REVERSE_DESCORE : 
+    //           closest == distance2 ? Constants.RedSidePoses.CLOSE_LEFT_REVERSE_DESCORE :
+    //           closest == distance3 ? Constants.RedSidePoses.CLOSE_RIGHT_REVERSE_DESCORE : 
+    //           closest == distance4 ? Constants.RedSidePoses.FAR_LEFT_REVERSE_DESCORE :
+    //           closest == distance5 ? Constants.RedSidePoses.FAR_RIGHT_REVERSE_DESCORE :
+    //           closest == distance6 ? Constants.RedSidePoses.FAR_REVERSE_DESCORE : null;
           
-          highAlgae = 
-              closest == distance1 || closest == distance4 || closest == distance5 ? true: 
-              closest == distance2 || closest == distance3 || closest == distance6 ? false : false;
-        } 
+    //       highAlgae = 
+    //           closest == distance1 || closest == distance4 || closest == distance5 ? true: 
+    //           closest == distance2 || closest == distance3 || closest == distance6 ? false : false;
+    //     } 
 
-        return Pair.of(returnPose, highAlgae);
-    }
+    //     return Pair.of(returnPose, highAlgae);
+    // }
 
     public static Pair<Pose2d,Boolean> findNearestDescore(){
         Pose2d currentPose = SwerveSubsystem.poseEstimator.getEstimatedPosition();
