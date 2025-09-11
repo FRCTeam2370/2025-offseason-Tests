@@ -54,13 +54,15 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorConfig.Slot0.kI = 0;
     elevatorConfig.Slot0.kD = 0.001;
     elevatorConfig.Slot0.kG = 0.015;
+    
+    elevatorConfig.CurrentLimits.StatorCurrentLimit = 40;
 
     elevatorConfig.Slot0.kS = 0;
     elevatorConfig.Slot0.kV = 0.002;
     elevatorConfig.Slot0.kA = 0;
 
-    elevatorConfig.MotionMagic.MotionMagicCruiseVelocity = 250;
-    elevatorConfig.MotionMagic.MotionMagicAcceleration = 350;
+    elevatorConfig.MotionMagic.MotionMagicCruiseVelocity = 300;
+    elevatorConfig.MotionMagic.MotionMagicAcceleration = 400;
 
     elevatorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 

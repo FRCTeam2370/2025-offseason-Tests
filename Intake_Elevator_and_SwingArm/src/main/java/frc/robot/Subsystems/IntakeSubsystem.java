@@ -117,6 +117,8 @@ public class IntakeSubsystem extends SubsystemBase {
     //TODO:find the kg here and do it properly: https://v6.docs.ctr-electronics.com/en/latest/docs/api-reference/device-specific/talonfx/closed-loop-requests.html#arm-cosine
     pivotConfig.Slot0.kG = 0;
 
+    pivotConfig.CurrentLimits.StatorCurrentLimit = 40;
+
     pivotConfig.Slot0.kS = 0.0; // Add 0.25 V output to overcome static friction
     pivotConfig.Slot0.kV = 0.002; //For this value do 12.0 Volts / max rpm
     pivotConfig.Slot0.kA = 0.0; // An acceleration of 1 rps/s requires 0.01 V output
@@ -124,8 +126,8 @@ public class IntakeSubsystem extends SubsystemBase {
     pivotConfig.Slot0.kI = 0;
     pivotConfig.Slot0.kD = 0.0;
 
-    pivotConfig.MotionMagic.MotionMagicCruiseVelocity = 100; // Target cruise velocity of 80 rps
-    pivotConfig.MotionMagic.MotionMagicAcceleration = 200;// double your cruise velocity
+    pivotConfig.MotionMagic.MotionMagicCruiseVelocity = 300; // Target cruise velocity of 80 rps
+    pivotConfig.MotionMagic.MotionMagicAcceleration = 400;// double your cruise velocity
 
     IntakePivot.getConfigurator().apply(pivotConfig);
     IntakePivot.setNeutralMode(NeutralModeValue.Coast);

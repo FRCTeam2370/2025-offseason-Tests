@@ -56,12 +56,14 @@ public class ShoulderSubsystem extends SubsystemBase {
     shoulderConfig.Slot0.kI = 0;
     shoulderConfig.Slot0.kD = 0.01;
 
+    shoulderConfig.CurrentLimits.StatorCurrentLimit = 40;
+
     shoulderConfig.Slot0.kS = 0.0; // Add 0.25 V output to overcome static friction
     shoulderConfig.Slot0.kV = 0.002; //For this value do 12.0 Volts / max rpm
     shoulderConfig.Slot0.kA = 0.0; // An acceleration of 1 rps/s requires 0.01 V output
 
     shoulderConfig.MotionMagic.MotionMagicCruiseVelocity = 160; // Target cruise velocity of 40 rps
-    shoulderConfig.MotionMagic.MotionMagicAcceleration = 170;// double your cruise velocity
+    shoulderConfig.MotionMagic.MotionMagicAcceleration = 200;// double your cruise velocity
 
     shoulderMotor.getConfigurator().apply(shoulderConfig);
     shoulderMotor.setNeutralMode(NeutralModeValue.Coast);

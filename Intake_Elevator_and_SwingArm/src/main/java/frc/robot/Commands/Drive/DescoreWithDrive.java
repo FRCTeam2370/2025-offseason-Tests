@@ -8,6 +8,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
@@ -25,11 +26,13 @@ import frc.robot.Subsystems.SwerveSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DescoreWithDrive extends SequentialCommandGroup {
+  PIDController rotationPID = new PIDController(0.2, 0.0, 0.0);
+  PIDController YPID = new PIDController(0.01, 0.0, 0.0025);
   /** Creates a new DescoreWithDrive. */
   public DescoreWithDrive(SwerveSubsystem mSwerveSubsystem, DoubleSupplier xSup, Supplier<Pose2d> pose) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     //TODO: add pid to the rotation
-    addCommands(mSwerveSubsystem.PathfindToPose(pose), new TeleopSwerve(mSwerveSubsystem, xSup, ()-> PhotonLocalization.intakeCamToTagY, ()-> -PhotonLocalization.intakeCamToTagRotation * 2, ()-> true));
+    addCommands(mSwerveSubsystem.PathfindToPose(pose), new TeleopSwerve(mSwerveSubsystem, xSup, ()-> -YPID.calculate(PhotonLocalization.intakeCamToTagY * 100), ()-> rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100), ()-> true));
   }
 }

@@ -45,6 +45,8 @@ public class PhotonLocalization extends SubsystemBase {
 
   public static double intakeCamToTagY;
   public static double intakeCamToTagRotation;
+  public static double YOffsetSlider = 0;
+  public static double YOffsetDescore = 0;
 
   // private Matrix<N3, N1> curSdDevs1;
   // private Matrix<N3, N1> curSdDevs2;
@@ -68,6 +70,8 @@ public class PhotonLocalization extends SubsystemBase {
     IntakeCam = new frc.robot.PhotonCamera(Constants.PhotonVisionConstants.IntakeCameraName, Constants.PhotonVisionConstants.IntakeCamToRobot);
 
     this.mSwerveSubsystem = mSwerveSubsystem;
+
+    SmartDashboard.putNumber("Y Offset", YOffsetSlider);
   }
 
   @Override
@@ -101,7 +105,9 @@ public class PhotonLocalization extends SubsystemBase {
     //updateIntakeOffsetDistance();
     SmartDashboard.putNumber("IntakeCamToTagY", intakeCamToTagY);
     SmartDashboard.putNumber("Camto Tag rotation offset", intakeCamToTagRotation);
-      
+    
+    SmartDashboard.putNumber("Y Offset Value", YOffsetDescore);
+    //YOffsetDescore = SmartDashboard.getNumber("Y Offset Slider", YOffsetDescore);
   }
 
   public void checkIntakeCam(){
@@ -109,13 +115,20 @@ public class PhotonLocalization extends SubsystemBase {
     Optional<EstimatedRobotPose> visionEst = Optional.empty();
     for(var change : results){
       if(change.hasTargets()){
-        intakeCamToTagY = change.getBestTarget().getBestCameraToTarget().getY();
-        double rotation = change.getBestTarget().getBestCameraToTarget().getRotation().getZ();
-        if(rotation >= 0){
-          intakeCamToTagRotation = rotation - Math.PI;
+          if(change.getBestTarget().getFiducialId() - 17 >= 0 && change.getBestTarget().getFiducialId() - 17 < 6){
+            YOffsetDescore = SmartDashboard.getNumber("Y Offset", YOffsetDescore);
+            intakeCamToTagY = change.getBestTarget().getBestCameraToTarget().getY() - YOffsetDescore;
+            double rotation = change.getBestTarget().getBestCameraToTarget().getRotation().getZ();
+            if(rotation >= 0){
+              intakeCamToTagRotation = rotation - Math.PI;
+            }else{
+              intakeCamToTagRotation = rotation + Math.PI;
+            }
         }else{
-          intakeCamToTagRotation = rotation + Math.PI;
+          intakeCamToTagY = 0;
+          intakeCamToTagRotation = 0;
         }
+        
          
         visionEst = IntakeCam.poseEstimator.update(change);
         

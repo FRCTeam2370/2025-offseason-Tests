@@ -19,9 +19,9 @@ public class TeleopSwerve extends Command {
   private SwerveSubsystem mSwerve;
   private DoubleSupplier xSup, ySup, rotSup;
   private BooleanSupplier robotCentricSup;
-  private SlewRateLimiter xLimiter = new SlewRateLimiter(6);
-  private SlewRateLimiter yLimiter = new SlewRateLimiter(6);
-  private SlewRateLimiter rotLimiter = new SlewRateLimiter(6);
+  private SlewRateLimiter xLimiter = new SlewRateLimiter(6.5);
+  private SlewRateLimiter yLimiter = new SlewRateLimiter(6.5);
+  private SlewRateLimiter rotLimiter = new SlewRateLimiter(6.5);
   /** Creates a new TeleopSwerve. */
   public TeleopSwerve(SwerveSubsystem mSwerve, DoubleSupplier xSup, DoubleSupplier ySup, DoubleSupplier rotSup, BooleanSupplier robotCentricSup) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -37,9 +37,9 @@ public class TeleopSwerve extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xVal = Math.abs(xSup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : xSup.getAsDouble();
-    double yVal = Math.abs(ySup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : ySup.getAsDouble();
-    double rotVal = Math.abs(rotSup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : rotSup.getAsDouble();
+    double xVal = xLimiter.calculate(Math.abs(xSup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : xSup.getAsDouble());
+    double yVal = yLimiter.calculate(Math.abs(ySup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : ySup.getAsDouble());
+    double rotVal = rotLimiter.calculate(Math.abs(rotSup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : rotSup.getAsDouble());
 
     if(SwerveSubsystem.isBlue()){
       xVal = -xVal;
@@ -47,6 +47,6 @@ public class TeleopSwerve extends Command {
     }
     
 
-    mSwerve.drive(new Translation2d(xLimiter.calculate(xVal), yLimiter.calculate(yVal)).times(Constants.SwerveConstants.maxSpeed), rotLimiter.calculate(rotVal * 0.1), !robotCentricSup.getAsBoolean(), true);
+    mSwerve.drive(new Translation2d(xVal, yVal).times(Constants.SwerveConstants.maxSpeed), rotVal * 0.1, !robotCentricSup.getAsBoolean(), true);
   }
 }
