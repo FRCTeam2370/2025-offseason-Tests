@@ -17,20 +17,15 @@ import frc.robot.Subsystems.ShoulderSubsystem;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class MoveMechanism extends Command {
   boolean isFinished = false;
-  double elevatorPos, shoulderPos;
+  double elevatorPos, shoulderPos, initialElevPos, initialShoulderPose;
   boolean shouldStowIntake = true;
   double curElevPos, curIntakePos, curShoulderPos;
   boolean shouldMoveIntake = true;
   /** Creates a new MoveMechanism. */
   public MoveMechanism(double elevatorPos, double shoulderPos, boolean shouldStowIntake, IntakeSubsystem mIntakeSubsystem, ShoulderSubsystem mShoulderSubsystem, ElevatorSubsystem mElevatorSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    if(ManipulatorSubsystem.hasAlgae || IntakeSubsystem.hasAlgaeInBowl){
-      this.elevatorPos = elevatorPos > Constants.MechanismConstants.maxElevatorVal ? Constants.MechanismConstants.maxElevatorVal : elevatorPos < Constants.MechanismConstants.minElevatorValAlg ? Constants.MechanismConstants.minElevatorValAlg : elevatorPos;
-      this.shoulderPos = shoulderPos > Constants.MechanismConstants.maxShoulderVal ? Constants.MechanismConstants.maxShoulderVal : shoulderPos < Constants.MechanismConstants.minShoulderValAlg ? Constants.MechanismConstants.minShoulderValAlg : shoulderPos;
-    }else{
-      this.shoulderPos = shoulderPos > Constants.MechanismConstants.maxShoulderVal ? Constants.MechanismConstants.maxShoulderVal : shoulderPos < Constants.MechanismConstants.minShoulderVal ? Constants.MechanismConstants.minShoulderVal : shoulderPos;
-      this.elevatorPos = elevatorPos > Constants.MechanismConstants.maxElevatorVal ? Constants.MechanismConstants.maxElevatorVal : elevatorPos < Constants.MechanismConstants.minElevatorVal ? Constants.MechanismConstants.minElevatorVal : elevatorPos;
-    }
+    this.initialElevPos = elevatorPos;
+    this.initialShoulderPose = shoulderPos;
     
     this.shouldStowIntake = shouldStowIntake;
     addRequirements(mIntakeSubsystem, mElevatorSubsystem, mShoulderSubsystem);
@@ -39,6 +34,14 @@ public class MoveMechanism extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    if(ManipulatorSubsystem.hasAlgae || IntakeSubsystem.hasAlgaeInBowl){
+      elevatorPos = initialElevPos > Constants.MechanismConstants.maxElevatorVal ? Constants.MechanismConstants.maxElevatorVal : initialElevPos < Constants.MechanismConstants.minElevatorValAlg ? Constants.MechanismConstants.minElevatorValAlg : initialElevPos;
+      shoulderPos = initialShoulderPose > Constants.MechanismConstants.maxShoulderVal ? Constants.MechanismConstants.maxShoulderVal : initialShoulderPose < Constants.MechanismConstants.minShoulderValAlg ? Constants.MechanismConstants.minShoulderValAlg : initialShoulderPose;
+    }else{
+      shoulderPos = initialShoulderPose > Constants.MechanismConstants.maxShoulderVal ? Constants.MechanismConstants.maxShoulderVal : initialShoulderPose < Constants.MechanismConstants.minShoulderVal ? Constants.MechanismConstants.minShoulderVal : initialShoulderPose;
+      elevatorPos = initialElevPos > Constants.MechanismConstants.maxElevatorVal ? Constants.MechanismConstants.maxElevatorVal : initialElevPos < Constants.MechanismConstants.minElevatorVal ? Constants.MechanismConstants.minElevatorVal : initialElevPos;
+    }
+
     isFinished = false;
     SmartDashboard.putBoolean("Finished Mechanism Command", false);
     curElevPos = ElevatorSubsystem.getElevatorPos();

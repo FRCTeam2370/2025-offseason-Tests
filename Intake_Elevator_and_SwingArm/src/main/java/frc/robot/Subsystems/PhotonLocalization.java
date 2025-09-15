@@ -115,9 +115,9 @@ public class PhotonLocalization extends SubsystemBase {
     Optional<EstimatedRobotPose> visionEst = Optional.empty();
     for(var change : results){
       if(change.hasTargets()){
-          if(change.getBestTarget().getFiducialId() - 17 >= 0 && change.getBestTarget().getFiducialId() - 17 < 6){
-            YOffsetDescore = SmartDashboard.getNumber("Y Offset", YOffsetDescore);
-            intakeCamToTagY = change.getBestTarget().getBestCameraToTarget().getY() - YOffsetDescore;
+          if((change.getBestTarget().getFiducialId() - 17 >= 0 && change.getBestTarget().getFiducialId() - 17 < 6) || (change.getBestTarget().getFiducialId() - 6 >= 0 && change.getBestTarget().getFiducialId() - 6 < 6)){
+            //YOffsetDescore = SmartDashboard.getNumber("Y Offset", YOffsetDescore);
+            intakeCamToTagY = change.getBestTarget().getBestCameraToTarget().getY();
             double rotation = change.getBestTarget().getBestCameraToTarget().getRotation().getZ();
             if(rotation >= 0){
               intakeCamToTagRotation = rotation - Math.PI;

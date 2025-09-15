@@ -52,6 +52,7 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("HasCoral", hasCoral);
     SmartDashboard.putNumber("Rollers Voltage", getRollerCurrent());
     SmartDashboard.putNumber("bowl Sensor", bowlSensor.getValue());
+    SmartDashboard.putBoolean("Has Algae in Bowl", hasAlgaeInBowl);
 
     if(hasCoral){
       IntakeRollers.set(0.025);

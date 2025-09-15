@@ -9,11 +9,13 @@ import java.time.chrono.MinguoChronology;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Commands.Climb;
 import frc.robot.Commands.Descore;
 import frc.robot.Commands.IntakeAlgae;
 import frc.robot.Commands.IntakeAlgaeWithMech;
@@ -21,6 +23,7 @@ import frc.robot.Commands.IntakeCoral;
 import frc.robot.Commands.IntakeCoralFromGround;
 import frc.robot.Commands.MoveElevatorIncrimentally;
 import frc.robot.Commands.MoveMechanism;
+import frc.robot.Commands.ReadyClimber;
 import frc.robot.Commands.MechanismCommands.SetMechanismToPose;
 import frc.robot.Commands.MechanismCommands.StowMechanism;
 import frc.robot.Lib.Utils.SwervePOILogic;
@@ -57,6 +60,7 @@ public class RobotContainer {
 
   public static CommandXboxController driver = new CommandXboxController(0);
   public static CommandXboxController operator = new CommandXboxController(1);
+  public static GenericHID dial = new GenericHID(2);
 
   private final SendableChooser<Command> autoChooser;
 
@@ -129,7 +133,7 @@ public class RobotContainer {
         // driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -0.75));
 
         //New Setpoint Commands 
-        //TODO: add pid to the rotation
+        //TODO: Add red side stuff!!!, Add operator controls, More autos(like a 3 piece),
         driver.rightStick().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -25, true));
         driver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 11, false));
         driver.povLeft().onTrue(new SetShoulderPos(58, mShoulderSubsystem));
@@ -137,10 +141,11 @@ public class RobotContainer {
         driver.b().onTrue(new Descore(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem).alongWith(new IntakeAlgae(0.75, mManipulatorSubsystem)));//new Descore(mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem));//new MoveMechanism(10, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         operator.x().onTrue(new MoveMechanism(0, 15, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         //driver.povDown().onTrue(new Descore(mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem));//new MoveMechanism(0, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        //driver.leftStick().onTrue(new StowMechanism(mElevatorSubsystem, mShoulderSubsystem, mIntakeSubsystem, mManipulatorSubsystem, ()-> SuperStructure.GetStowCommand()));
         driver.leftStick().onTrue(new MoveMechanism(0, 1, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.povRight().onTrue(new MoveMechanism(41, 30, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.povUp().toggleOnTrue(new DescoreWithDrive(mSwerve, ()-> -driver.getRawAxis(1), ()-> SwervePOILogic.findNearestDescore().getFirst()).alongWith(new Descore(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem)).alongWith(new IntakeAlgae(0.75, mManipulatorSubsystem)));
-        operator.a().whileTrue(mSwerve.PathfindToPose(()-> Constants.BlueSidePoses.CLOSE_DESCORE));
+        driver.povUp().toggleOnTrue(new DescoreWithDrive(mSwerve, ()-> -driver.getRawAxis(1), ()-> SwervePOILogic.findNearestDescore().getFirst(), ()-> dial.getRawAxis(0)).alongWith(new Descore(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem)).alongWith(new IntakeAlgae(0.75, mManipulatorSubsystem)));
+        //operator.a().whileTrue(mSwerve.PathfindToPose(()-> Constants.BlueSidePoses.CLOSE_DESCORE));
 
         driver.rightTrigger().toggleOnTrue(new IntakeCoralFromGround(.4, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.leftTrigger().whileTrue(new RunIntake(-0.25, mIntakeSubsystem));
@@ -149,7 +154,12 @@ public class RobotContainer {
 
         driver.y().onTrue(new IntakeAlgaeWithMech(0.85, mIntakeSubsystem, mElevatorSubsystem, mShoulderSubsystem));
         driver.x().onTrue(new YeetAlgae(mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem, mShoulderSubsystem));
-        //driver.back().onTrue(new StowWithAlgaeInBucket(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+        //driver.back().onTrue(new StowWithAlgaeInBucket(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem))
+        
+        operator.rightBumper().onTrue(new MoveMechanism(41, 43, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
+
+        operator.a().onTrue(new ReadyClimber(mIntakeSubsystem, mElevatorSubsystem, mShoulderSubsystem));
+        operator.b().toggleOnTrue(new Climb(()-> operator.getRawAxis(2), ()-> operator.getRawAxis(3), mIntakeSubsystem));
   }
 
   public Command getAutonomousCommand() {

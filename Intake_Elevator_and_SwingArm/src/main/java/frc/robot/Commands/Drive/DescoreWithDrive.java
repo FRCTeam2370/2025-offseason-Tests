@@ -10,6 +10,8 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.Commands.Descore;
@@ -28,11 +30,29 @@ import frc.robot.Subsystems.SwerveSubsystem;
 public class DescoreWithDrive extends SequentialCommandGroup {
   PIDController rotationPID = new PIDController(0.2, 0.0, 0.0);
   PIDController YPID = new PIDController(0.01, 0.0, 0.0025);
+
+  double xVal;
+  double yVal;
+  double rotVal;
+
+  Command driveCommand;
   /** Creates a new DescoreWithDrive. */
-  public DescoreWithDrive(SwerveSubsystem mSwerveSubsystem, DoubleSupplier xSup, Supplier<Pose2d> pose) {
+  public DescoreWithDrive(SwerveSubsystem mSwerveSubsystem, DoubleSupplier xSup, Supplier<Pose2d> pose, DoubleSupplier yOffset) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     //TODO: add pid to the rotation
-    addCommands(mSwerveSubsystem.PathfindToPose(pose), new TeleopSwerve(mSwerveSubsystem, xSup, ()-> -YPID.calculate(PhotonLocalization.intakeCamToTagY * 100), ()-> rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100), ()-> true));
+    if(SwerveSubsystem.isBlue()){
+      xVal = xSup.getAsDouble();
+      yVal = -YPID.calculate(PhotonLocalization.intakeCamToTagY * 100);
+      rotVal = rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100);
+      driveCommand = new TeleopSwerve(mSwerveSubsystem, ()-> xSup.getAsDouble(), ()-> -YPID.calculate(PhotonLocalization.intakeCamToTagY * 100) + yOffset.getAsDouble(), ()-> rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100), ()-> true);
+    }else{
+      xVal = -xSup.getAsDouble();
+      yVal = YPID.calculate(PhotonLocalization.intakeCamToTagY * 100);
+      rotVal = -rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100);
+      driveCommand = new TeleopSwerve(mSwerveSubsystem, ()-> -xSup.getAsDouble(), ()-> YPID.calculate(PhotonLocalization.intakeCamToTagY * 100) - yOffset.getAsDouble(), ()-> rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100), ()-> true);
+    }
+
+    addCommands(mSwerveSubsystem.PathfindToPose(pose), driveCommand);
   }
 }

@@ -56,6 +56,14 @@ public class SuperStructure extends SubsystemBase {
     }
   }
 
+  public static Command GetStowCommand(){
+    if(!ManipulatorSubsystem.hasAlgae){
+      return new MoveMechanism(0, 1, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem);
+    }else{
+      return new MoveMechanism(6, 2, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem);
+    }
+  }
+
   public Command GetDescoreCommand(){
     if(SuperStructure.descoreState == DescoreState.UP){
       return new MoveMechanism(15, SuperStructure.getDescoreSetpoints().getSecond(), true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem);
