@@ -28,8 +28,8 @@ import frc.robot.Subsystems.SwerveSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DescoreWithDrive extends SequentialCommandGroup {
-  PIDController rotationPID = new PIDController(0.2, 0.0, 0.0);
-  PIDController YPID = new PIDController(0.01, 0.0, 0.0025);
+  PIDController rotationPID = new PIDController(0.075, 0.0, 0.0);
+  PIDController YPID = new PIDController(0.0125, 0.0005, 0.0);
 
   double xVal;
   double yVal;

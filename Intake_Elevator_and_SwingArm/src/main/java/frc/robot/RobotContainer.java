@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.Climb;
 import frc.robot.Commands.Descore;
 import frc.robot.Commands.IntakeAlgae;
+import frc.robot.Commands.IntakeAlgaeAuto;
 import frc.robot.Commands.IntakeAlgaeWithMech;
 import frc.robot.Commands.IntakeCoral;
 import frc.robot.Commands.IntakeCoralFromGround;
@@ -74,7 +75,7 @@ public class RobotContainer {
   public RobotContainer() {
     NamedCommands.registerCommand("Low Descore Forward", new MoveMechanism(0, 15, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
     NamedCommands.registerCommand("UP Descore Forward", new MoveMechanism(15, 17, true, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-    NamedCommands.registerCommand("Intake Algae", new IntakeAlgae(0.75, mManipulatorSubsystem));
+    NamedCommands.registerCommand("Intake Algae", new IntakeAlgaeAuto(0.75, mManipulatorSubsystem));
     NamedCommands.registerCommand("Score L1", new SetIntakePosWithMagic(mIntakeSubsystem, -20, true));
     NamedCommands.registerCommand("Spit Coral", new RunIntake(-0.25, mIntakeSubsystem));
     NamedCommands.registerCommand("Stop Intake", new RunIntake(0, mIntakeSubsystem));
@@ -133,8 +134,8 @@ public class RobotContainer {
         // driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -0.75));
 
         //New Setpoint Commands 
-        //TODO: Add red side stuff!!!, Add operator controls, More autos(like a 3 piece),
-        driver.rightStick().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -25, true));
+        //TODO: Add operator controls CLIMBING!!!!!, More autos(like a 3 piece),
+        driver.y().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -25, true));
         driver.a().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, 11, false));
         driver.povLeft().onTrue(new SetShoulderPos(58, mShoulderSubsystem));
         //driver.x().onTrue(new SetIntakePosWithMagic(mIntakeSubsystem, -89));
@@ -149,10 +150,10 @@ public class RobotContainer {
 
         driver.rightTrigger().toggleOnTrue(new IntakeCoralFromGround(.4, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
         driver.leftTrigger().whileTrue(new RunIntake(-0.25, mIntakeSubsystem));
-        driver.rightBumper().toggleOnTrue(new IntakeAlgae(.75, mManipulatorSubsystem));
+        driver.rightBumper().toggleOnTrue(new IntakeAlgaeAuto(.75, mManipulatorSubsystem));
         driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -1));
 
-        driver.y().onTrue(new IntakeAlgaeWithMech(0.85, mIntakeSubsystem, mElevatorSubsystem, mShoulderSubsystem));
+        driver.rightStick().onTrue(new IntakeAlgaeWithMech(0.85, mIntakeSubsystem, mElevatorSubsystem, mShoulderSubsystem));
         driver.x().onTrue(new YeetAlgae(mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem, mShoulderSubsystem));
         //driver.back().onTrue(new StowWithAlgaeInBucket(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem))
         

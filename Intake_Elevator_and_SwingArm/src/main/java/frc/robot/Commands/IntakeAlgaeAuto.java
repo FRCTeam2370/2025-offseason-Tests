@@ -4,51 +4,53 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Subsystems.IntakeSubsystem;
 import frc.robot.Subsystems.ManipulatorSubsystem;
-import frc.robot.Subsystems.ShoulderSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class YEET extends Command {
-  boolean Finished = false;
-  /** Creates a new YEET. */
-  public YEET(ManipulatorSubsystem mManipulatorSubsystem) {
+public class IntakeAlgaeAuto extends Command {
+  double speed;
+  Timer timer = new Timer();
+  /** Creates a new IntakeAlgae. */
+  public IntakeAlgaeAuto(double speed, ManipulatorSubsystem mManipulatorSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.speed = speed;
     addRequirements(mManipulatorSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(!ManipulatorSubsystem.hasAlgae ){
-      Finished = true;
-    }
+    timer.reset();
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(ShoulderSubsystem.getShoulderPos() > 20){
-      ManipulatorSubsystem.hasAlgae = false;
-      ManipulatorSubsystem.runManipulator(-0.75);
-    }else{
-      ManipulatorSubsystem.runManipulator(0.15);
-    }
+    ManipulatorSubsystem.runManipulator(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    timer.stop();
+    
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(ShoulderSubsystem.getShoulderPos() > 40 && !ManipulatorSubsystem.hasAlgae){
-      Finished = true;
+    if(ManipulatorSubsystem.getManipulatorStatorCurrent() > 30){
+      ManipulatorSubsystem.hasAlgae = true;
+      return true;
+    }else if(timer.get() > 2){
+      ManipulatorSubsystem.runManipulator(0);
+      return true;
     }else{
-      Finished = false;
+      return false;
     }
-    return Finished;
   }
 }

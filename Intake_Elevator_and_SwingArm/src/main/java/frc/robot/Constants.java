@@ -102,7 +102,7 @@ public final class Constants {
         public static final Transform3d BRCamToRobot = new Transform3d(0.244475,0.22225,0.2159, new Rotation3d(0, Math.toRadians(-10), Math.toRadians(45)));
 
         public static final String IntakeCameraName = "IntakeCam";
-        public static final Transform3d IntakeCamToRobot = new Transform3d(0,0,0.2159 +0.053975, new Rotation3d(0, Math.toRadians(-20), Math.toRadians(180)));
+        public static final Transform3d IntakeCamToRobot = new Transform3d(0,-0.01,0.2159 +0.053975, new Rotation3d(0, Math.toRadians(-20), Math.toRadians(180)));
 
         public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
         public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);

@@ -55,12 +55,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "UP Descore Forward"
@@ -88,6 +82,36 @@
           "type": "path",
           "data": {
             "pathName": "BL Algae - Barge"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Yeet"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "UP Descore Forward"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Barge - BR"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake Algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BR - Barge"
           }
         },
         {

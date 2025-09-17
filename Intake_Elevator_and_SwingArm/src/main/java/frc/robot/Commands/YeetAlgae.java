@@ -19,6 +19,6 @@ public class YeetAlgae extends SequentialCommandGroup {
   public YeetAlgae(IntakeSubsystem mIntakeSubsystem, ManipulatorSubsystem mManipulatorSubsystem, ElevatorSubsystem mElevatorSubsystem, ShoulderSubsystem mShoulderSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new StowWithAlgaeInBucket(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem), new IntakeAlgae(0.5, mManipulatorSubsystem), new MoveMechanism(43, 42, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem).alongWith(new YEET(mManipulatorSubsystem)));
+    addCommands(new StowWithAlgaeInBucket(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem), new IntakeAlgaeAuto(0.5, mManipulatorSubsystem), new MoveMechanism(43, 42, false, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem).alongWith(new YEET(mManipulatorSubsystem)));
   }
 }
