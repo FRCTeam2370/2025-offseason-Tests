@@ -61,9 +61,15 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Spit Algae"
+            "pathName": "Barge - BR Safe End"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Safe BR - Stow"
           }
         }
       ]

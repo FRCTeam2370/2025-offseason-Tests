@@ -43,7 +43,7 @@ public class IntakeAlgaeAuto extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(ManipulatorSubsystem.getManipulatorStatorCurrent() > 30){
+    if(ManipulatorSubsystem.getManipulatorStatorCurrent() > 25){
       ManipulatorSubsystem.hasAlgae = true;
       return true;
     }else if(timer.get() > 2){

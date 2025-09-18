@@ -1,0 +1,129 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.372,
+        "y": 5.29
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.407963114754098,
+        "y": 4.522786885245902
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.485348360655738,
+        "y": 2.9640881147540985
+      },
+      "prevControl": {
+        "x": 6.650245833257924,
+        "y": 3.151994537021705
+      },
+      "nextControl": {
+        "x": 5.969877049180327,
+        "y": 2.3766905737704915
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.03483606557377,
+        "y": 2.9640881147540985
+      },
+      "prevControl": {
+        "x": 5.41844262295082,
+        "y": 2.4246413934426236
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Speed Up",
+      "minWaypointRelativePos": 0.44834571235650933,
+      "maxWaypointRelativePos": 1.5449020931802837,
+      "constraints": {
+        "maxVelocity": 4.0,
+        "maxAcceleration": 4.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Spit Algae",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Spit Algae"
+        }
+      }
+    },
+    {
+      "name": "UP Descore Forward",
+      "waypointRelativePos": 0.31870357866306487,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "UP Descore Forward"
+        }
+      }
+    },
+    {
+      "name": "Stow Intake",
+      "waypointRelativePos": 1.2153950033760859,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Stow Intake"
+        }
+      }
+    },
+    {
+      "name": "Intake Algae",
+      "waypointRelativePos": 1.45307224848075,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Intake Algae"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -53.13010235415599
+  },
+  "reversed": false,
+  "folder": "Middle Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 10.391539981527488
+  },
+  "useDefaultConstraints": true
+}

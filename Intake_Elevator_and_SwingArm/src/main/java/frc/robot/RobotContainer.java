@@ -24,6 +24,7 @@ import frc.robot.Commands.IntakeCoral;
 import frc.robot.Commands.IntakeCoralFromGround;
 import frc.robot.Commands.MoveElevatorIncrimentally;
 import frc.robot.Commands.MoveMechanism;
+import frc.robot.Commands.OutTakePiece;
 import frc.robot.Commands.ReadyClimber;
 import frc.robot.Commands.MechanismCommands.SetMechanismToPose;
 import frc.robot.Commands.MechanismCommands.StowMechanism;
@@ -158,7 +159,7 @@ public class RobotContainer {
         //operator.a().whileTrue(mSwerve.PathfindToPose(()-> Constants.BlueSidePoses.CLOSE_DESCORE));
 
         driver.rightTrigger().toggleOnTrue(new IntakeCoralFromGround(.4, mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem));
-        driver.leftTrigger().whileTrue(new RunIntake(-0.25, mIntakeSubsystem));
+        driver.leftTrigger().whileTrue(new OutTakePiece(0.25, mIntakeSubsystem));
         driver.rightBumper().toggleOnTrue(new IntakeAlgae(.75, mManipulatorSubsystem));
         driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -1));
 

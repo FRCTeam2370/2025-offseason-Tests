@@ -25,7 +25,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if(hasAlgae){
-      runManipulator(0.35);
+      runManipulator(0.4);
       // if(getManipulatorStatorCurrent() < 27){
       //   hasAlgae = false;
       // }

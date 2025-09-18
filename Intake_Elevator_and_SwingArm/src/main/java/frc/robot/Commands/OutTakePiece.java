@@ -4,14 +4,16 @@
 
 package frc.robot.Commands;
 
+import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.IntakeSubsystem;
+import pabeles.concurrency.IntOperatorTask.Min;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class IntakeAlgaeToBowl extends Command {
+public class OutTakePiece extends Command {
+  /** Creates a new OutTakePiece. */
   double speed;
-  /** Creates a new IntakeAlgaeToBowl. */
-  public IntakeAlgaeToBowl(double speed, IntakeSubsystem mIntakeSubsystem) {
+  public OutTakePiece(double speed, IntakeSubsystem mIntakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.speed = speed;
     addRequirements(mIntakeSubsystem);
@@ -19,14 +21,21 @@ public class IntakeAlgaeToBowl extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    if(IntakeSubsystem.hasCoral){
+      speed = -Math.abs(speed);
+    }else{
+      speed = Math.abs(speed);
+    }
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    IntakeSubsystem.setIntakeMagicPose(-46);
-    IntakeSubsystem.runIntake(-Math.abs(speed));
+    IntakeSubsystem.hasCoral = false;
+    IntakeSubsystem.runIntake(speed);
   }
+  
 
   // Called once the command ends or is interrupted.
   @Override
@@ -37,6 +46,6 @@ public class IntakeAlgaeToBowl extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return IntakeSubsystem.hasAlgaeInBowl;
+    return false;
   }
 }
