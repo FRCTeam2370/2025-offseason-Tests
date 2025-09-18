@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 5.154713114754099,
-        "y": 5.157838114754097
+        "y": 5.158
       },
       "prevControl": null,
       "nextControl": {
         "x": 5.514344262295082,
-        "y": 5.577407786885245
+        "y": 5.5775696721311485
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.557,
-        "y": 5.05
+        "x": 7.372438524590163,
+        "y": 5.29
       },
       "prevControl": {
-        "x": 5.981590163934426,
-        "y": 5.121926229508197
+        "x": 6.7970286885245885,
+        "y": 5.361926229508197
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,17 +29,42 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.2970965563808253,
+      "maxWaypointRelativePos": 0.7616475354490188,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Stow Mechanism",
-      "waypointRelativePos": 0.0,
+      "name": "Safe Barge",
+      "waypointRelativePos": 0.1620526671168158,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Stow Mechanism"
+          "name": "Safe Barge"
+        }
+      }
+    },
+    {
+      "name": "Spit Algae",
+      "waypointRelativePos": 0.9264010803511159,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Spit Algae"
         }
       }
     }
@@ -54,7 +79,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 31.18497465873849
+    "rotation": 5.4403320310055
   },
   "reversed": false,
   "folder": "Middle Paths",

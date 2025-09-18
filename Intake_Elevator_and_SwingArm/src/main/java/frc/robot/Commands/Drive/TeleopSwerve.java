@@ -19,9 +19,9 @@ public class TeleopSwerve extends Command {
   private SwerveSubsystem mSwerve;
   private DoubleSupplier xSup, ySup, rotSup;
   private BooleanSupplier robotCentricSup;
-  private SlewRateLimiter xLimiter = new SlewRateLimiter(6.5);
-  private SlewRateLimiter yLimiter = new SlewRateLimiter(6.5);
-  private SlewRateLimiter rotLimiter = new SlewRateLimiter(6.5);
+  private SlewRateLimiter xLimiter = new SlewRateLimiter(7);
+  private SlewRateLimiter yLimiter = new SlewRateLimiter(7);
+  private SlewRateLimiter rotLimiter = new SlewRateLimiter(7);
   /** Creates a new TeleopSwerve. */
   public TeleopSwerve(SwerveSubsystem mSwerve, DoubleSupplier xSup, DoubleSupplier ySup, DoubleSupplier rotSup, BooleanSupplier robotCentricSup) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -41,9 +41,11 @@ public class TeleopSwerve extends Command {
     double yVal = yLimiter.calculate(Math.abs(ySup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : ySup.getAsDouble());
     double rotVal = rotLimiter.calculate(Math.abs(rotSup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : rotSup.getAsDouble());
 
-    if(SwerveSubsystem.isBlue()){
+    if(SwerveSubsystem.isBlue() && !robotCentricSup.getAsBoolean()){
       xVal = -xVal;
       yVal = -yVal;
+    }else if(SwerveSubsystem.isBlue() && robotCentricSup.getAsBoolean()){
+      xVal = -xVal;
     }
     
 

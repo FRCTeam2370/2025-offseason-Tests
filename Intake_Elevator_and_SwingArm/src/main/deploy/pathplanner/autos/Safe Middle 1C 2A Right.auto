@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Low Descore Forward"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Start - B Algae"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Algae"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Score L1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Safe B Algae - Barge"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Safe Barge - BR"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Safe BR - Barge"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Spit Algae"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Middle Autos",
+  "choreoAuto": false
+}

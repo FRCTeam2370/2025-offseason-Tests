@@ -1,0 +1,111 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Low Descore Forward"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Start - B Algae"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Algae"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Score L1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "B Algae - Barge"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Yeet"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "PP Barge - BL Algae"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake Algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BL Algae - Barge"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Yeet"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "PP Barge - BR"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake Algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BR - Barge"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Yeet"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Middle Autos",
+  "choreoAuto": false
+}

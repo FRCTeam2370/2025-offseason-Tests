@@ -38,11 +38,6 @@ public class SetIntakePos extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(IntakeSubsystem.IntakePivot.getPosition().getValueAsDouble() >= pos * 0.95 && IntakeSubsystem.IntakePivot.getPosition().getValueAsDouble() <= pos * 1.05){
-      SmartDashboard.putBoolean("In Intake Command", false);
-      return true;
-    }else{
-      return false;
-    }
+    return false;
   }
 }

@@ -40,7 +40,7 @@ public class Climb extends Command {
       pos -= 1;
     }
 
-    IntakeSubsystem.setIntakeMagicPose(pos);
+    IntakeSubsystem.setIntakePose(pos);
   }
 
   // Called once the command ends or is interrupted.

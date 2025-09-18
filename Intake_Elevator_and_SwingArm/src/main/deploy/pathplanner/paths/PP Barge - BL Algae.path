@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.0,
-        "y": 5.1
+        "x": 5.11875,
+        "y": 5.1698258196721305
       },
       "prevControl": {
-        "x": 5.323668032786885,
-        "y": 5.495594262295081
+        "x": 5.41844262295082,
+        "y": 5.76921106557377
       },
       "nextControl": null,
       "isLocked": false,
@@ -78,7 +78,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 56.537598608728864
+    "rotation": 61.189206257027024
   },
   "reversed": false,
   "folder": "Middle Paths",

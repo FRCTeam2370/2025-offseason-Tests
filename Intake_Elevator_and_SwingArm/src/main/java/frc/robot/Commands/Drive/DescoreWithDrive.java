@@ -41,17 +41,17 @@ public class DescoreWithDrive extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     //TODO: add pid to the rotation
-    if(SwerveSubsystem.isBlue()){
-      xVal = xSup.getAsDouble();
-      yVal = -YPID.calculate(PhotonLocalization.intakeCamToTagY * 100);
-      rotVal = rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100);
-      driveCommand = new TeleopSwerve(mSwerveSubsystem, ()-> xSup.getAsDouble(), ()-> -YPID.calculate(PhotonLocalization.intakeCamToTagY * 100) + yOffset.getAsDouble(), ()-> rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100), ()-> true);
-    }else{
+    // if(SwerveSubsystem.isBlue()){
+      // xVal = xSup.getAsDouble();
+      // yVal = -YPID.calculate(PhotonLocalization.intakeCamToTagY * 100);
+      // rotVal = rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100);
+      // driveCommand = new TeleopSwerve(mSwerveSubsystem, ()-> xSup.getAsDouble(), ()-> -YPID.calculate(PhotonLocalization.intakeCamToTagY * 100) + yOffset.getAsDouble(), ()-> rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100), ()-> true);
+    // }else{
       xVal = -xSup.getAsDouble();
       yVal = YPID.calculate(PhotonLocalization.intakeCamToTagY * 100);
       rotVal = -rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100);
       driveCommand = new TeleopSwerve(mSwerveSubsystem, ()-> -xSup.getAsDouble(), ()-> YPID.calculate(PhotonLocalization.intakeCamToTagY * 100) - yOffset.getAsDouble(), ()-> rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100), ()-> true);
-    }
+    // }
 
     addCommands(mSwerveSubsystem.PathfindToPose(pose), driveCommand);
   }

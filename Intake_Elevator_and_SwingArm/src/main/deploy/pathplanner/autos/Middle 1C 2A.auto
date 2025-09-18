@@ -55,18 +55,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "UP Descore Forward"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stow Intake"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Barge - BL Algae"
@@ -88,12 +76,6 @@
           "type": "named",
           "data": {
             "name": "Yeet"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "UP Descore Forward"
           }
         },
         {

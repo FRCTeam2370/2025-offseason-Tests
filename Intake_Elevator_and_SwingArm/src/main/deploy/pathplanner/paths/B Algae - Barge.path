@@ -44,6 +44,17 @@
       }
     },
     {
+      "name": "Stow Mechanism",
+      "waypointRelativePos": 0.07292370020256213,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Stow Mechanism"
+        }
+      }
+    },
+    {
       "name": "Stop Intake",
       "waypointRelativePos": 0.453747467927072,
       "endWaypointRelativePos": null,
@@ -56,8 +67,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -73,5 +84,5 @@
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

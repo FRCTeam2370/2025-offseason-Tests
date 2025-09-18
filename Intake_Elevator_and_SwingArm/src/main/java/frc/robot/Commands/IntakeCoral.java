@@ -20,7 +20,9 @@ public class IntakeCoral extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    IntakeSubsystem.hasCoral = false;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -35,7 +37,7 @@ public class IntakeCoral extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(IntakeSubsystem.getRollerCurrent() > 15){
+    if(IntakeSubsystem.getRollerCurrent() > 20){
       IntakeSubsystem.hasCoral = true;
       return true;
     }
