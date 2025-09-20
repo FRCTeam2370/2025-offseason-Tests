@@ -42,10 +42,12 @@ public class TeleopSwerve extends Command {
     double rotVal = rotLimiter.calculate(Math.abs(rotSup.getAsDouble()) < Constants.SwerveConstants.Deadband ? 0 : rotSup.getAsDouble());
 
     if(SwerveSubsystem.isBlue() && !robotCentricSup.getAsBoolean()){
-      xVal = -xVal;
-      yVal = -yVal;
-    }else if(SwerveSubsystem.isBlue() && robotCentricSup.getAsBoolean()){
-      xVal = -xVal;
+      if(robotCentricSup.getAsBoolean()){
+        xVal = -xVal;
+      }else{
+        xVal = -xVal;
+        yVal = -yVal;
+      }
     }
     
 

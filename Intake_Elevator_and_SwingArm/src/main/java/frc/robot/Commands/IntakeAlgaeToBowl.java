@@ -24,7 +24,7 @@ public class IntakeAlgaeToBowl extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    IntakeSubsystem.setIntakeMagicPose(-46);
+    IntakeSubsystem.setIntakeMagicPose(-42 + IntakeSubsystem.intakeOffset);
     IntakeSubsystem.runIntake(-Math.abs(speed));
   }
 

@@ -49,27 +49,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "PP Safe Barge - BL Algae"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Safe Barge - B Algae Op"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Stow Mechanism"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Safe BL Algae - Barge"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Barge - BR Safe End"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Safe BR - Stow"
+            "pathName": null
           }
         }
       ]

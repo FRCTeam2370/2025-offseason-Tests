@@ -61,9 +61,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Spit Algae"
+            "pathName": "Ready from Barge"
           }
         }
       ]

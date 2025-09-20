@@ -163,7 +163,7 @@ public class RobotContainer {
         driver.rightBumper().toggleOnTrue(new IntakeAlgae(.75, mManipulatorSubsystem));
         driver.leftBumper().whileTrue(new RunManipulator(mManipulatorSubsystem, -1));
 
-        driver.rightStick().onTrue(new IntakeAlgaeWithMech(0.85, mIntakeSubsystem, mElevatorSubsystem, mShoulderSubsystem));
+        driver.rightStick().onTrue(new IntakeAlgaeWithMech(1, mIntakeSubsystem, mElevatorSubsystem, mShoulderSubsystem));
         driver.x().onTrue(new YeetAlgae(mIntakeSubsystem, mManipulatorSubsystem, mElevatorSubsystem, mShoulderSubsystem));
         //driver.back().onTrue(new StowWithAlgaeInBucket(mIntakeSubsystem, mShoulderSubsystem, mElevatorSubsystem))
         

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.485,
-        "y": 4.822
+        "x": 7.456,
+        "y": 4.546
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.065803278688524,
-        "y": 5.3014323770491805
+        "x": 7.15630737704918,
+        "y": 4.92960655737705
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.058811475409836,
-        "y": 5.013985655737705
+        "x": 5.46639344262295,
+        "y": 7.243698770491803
       },
       "prevControl": {
-        "x": 5.430430327868853,
-        "y": 5.877100409836064
+        "x": 6.593237704918032,
+        "y": 7.507428278688525
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,37 +33,24 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "UP Descore Forward",
-      "waypointRelativePos": 0.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "UP Descore Forward"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Stow Intake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Intake Algae",
-      "waypointRelativePos": 0.6293045239702962,
+      "name": "Spit Algae",
+      "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Intake Algae"
+          "name": "Spit Algae"
+        }
+      }
+    },
+    {
+      "name": "Stow Mechanism",
+      "waypointRelativePos": 0.2808912896691398,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Stow Mechanism"
         }
       }
     }
@@ -78,13 +65,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 61.189206257027024
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Middle Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 30.256437163529316
+    "rotation": 6.3960085557488835
   },
   "useDefaultConstraints": true
 }

@@ -148,12 +148,36 @@ public class PhotonLocalization extends SubsystemBase {
   public void checkCamera(PhotonCamera camera, PhotonPoseEstimator estimator, Matrix<N3, N1> sdDevs){
     var results = camera.getAllUnreadResults();
     Optional<EstimatedRobotPose> visionEst = Optional.empty();
+    boolean shouldUpdateResult = false;
     for(var change : results){
       if(change.hasTargets()){
         visionEst = estimator.update(change);
-        
-        mSwerveSubsystem.updateEstimatorWithPose(visionEst.get().estimatedPose, change.getTimestampSeconds(), getEstSdDevs(visionEst, change.getTargets(), estimator, sdDevs));
 
+
+
+        for(var target : change.getTargets()){
+          if(SwerveSubsystem.isBlue()){
+            if(target.getFiducialId() >= 12){
+              shouldUpdateResult = true;
+            }else{
+              shouldUpdateResult = false;
+            }
+          }else{
+            if(target.getFiducialId() <=11){
+              shouldUpdateResult = true;
+            }else{
+              shouldUpdateResult = false;
+            }
+          }
+        }
+        
+        if(shouldUpdateResult){
+          mSwerveSubsystem.updateEstimatorWithPose(visionEst.get().estimatedPose, change.getTimestampSeconds(), getEstSdDevs(visionEst, change.getTargets(), estimator, sdDevs));
+        }
+        
+
+        //mSwerveSubsystem.updateEstimatorWithPose(visionEst.get().estimatedPose, change.getTimestampSeconds(), getEstSdDevs(visionEst, change.getTargets(), estimator, sdDevs));
+        
         // SIMPLY SINGLE TAG LOCALIZATION
           // var target = change.getBestTarget();
           // if (Constants.PhotonVisionConstants.kTagLayout.getTagPose(target.getFiducialId()).isPresent()) {

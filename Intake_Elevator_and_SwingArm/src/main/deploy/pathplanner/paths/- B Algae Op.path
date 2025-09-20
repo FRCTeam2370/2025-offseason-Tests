@@ -3,62 +3,74 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.485,
-        "y": 4.822
+        "x": 7.157,
+        "y": 5.613
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.065803278688524,
-        "y": 5.3014323770491805
+        "x": 8.156999999999998,
+        "y": 5.613
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.058811475409836,
-        "y": 5.013985655737705
+        "x": 9.63811475409836,
+        "y": 5.613
       },
       "prevControl": {
-        "x": 5.430430327868853,
-        "y": 5.877100409836064
+        "x": 9.326434426229508,
+        "y": 5.613370901639343
+      },
+      "nextControl": {
+        "x": 10.108810733965614,
+        "y": 5.612439868689313
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 11.83186475409836,
+        "y": 4.0
+      },
+      "prevControl": {
+        "x": 10.83186475409836,
+        "y": 4.0
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8102345415778203,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.6545842217484055,
+      "rotationDegrees": 157.22533840429284
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "UP Descore Forward",
-      "waypointRelativePos": 0.0,
+      "name": "Low Descore Forward",
+      "waypointRelativePos": 1.1559756920999344,
       "endWaypointRelativePos": null,
       "command": {
-        "type": "sequential",
+        "type": "named",
         "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "UP Descore Forward"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Stow Intake"
-              }
-            }
-          ]
+          "name": "Low Descore Forward"
         }
       }
     },
     {
       "name": "Intake Algae",
-      "waypointRelativePos": 0.6293045239702962,
+      "waypointRelativePos": 1.3234301147873062,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -78,13 +90,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 61.189206257027024
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Middle Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 30.256437163529316
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

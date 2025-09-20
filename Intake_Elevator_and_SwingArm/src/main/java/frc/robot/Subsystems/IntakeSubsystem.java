@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class IntakeSubsystem extends SubsystemBase {
   public static TalonFX IntakePivot = new TalonFX(Constants.IntakeConstants.IntakeID);
@@ -27,6 +28,8 @@ public class IntakeSubsystem extends SubsystemBase {
   public static CANcoder IntakeEncoder = new CANcoder(Constants.IntakeConstants.EncoderID);
 
   public static AnalogInput bowlSensor = new AnalogInput(3);
+
+  public static double intakeOffset = 0;
 
   public static boolean hasCoral = false;
   public static boolean hasAlgaeInBowl = false;
@@ -63,6 +66,12 @@ public class IntakeSubsystem extends SubsystemBase {
       LEDSubsystem.hasAlgaeLEDAnim();
     }else{
       hasAlgaeInBowl = false;
+    }
+
+    if(RobotContainer.operator.getLeftTriggerAxis() > 0.2){
+      intakeOffset = RobotContainer.dial.getRawAxis(1) * 2;
+    }else{
+      intakeOffset = 0;
     }
   }
 

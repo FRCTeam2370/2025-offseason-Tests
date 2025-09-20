@@ -28,8 +28,8 @@ import frc.robot.Subsystems.SwerveSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DescoreWithDrive extends SequentialCommandGroup {
-  PIDController rotationPID = new PIDController(0.075, 0.0, 0.0);
-  PIDController YPID = new PIDController(0.01, 0.009, 0.005);// I: 0.0135, D: 0.0009,   P: 0.017, I: 0.01, D: 0.00165
+  PIDController rotationPID = new PIDController(0.025, 0.0, 0.0);
+  PIDController YPID = new PIDController(0.0075, 0.0005, 0.005);// I: 0.0135, D: 0.0009,   P: 0.017, I: 0.01, D: 0.00165
 
   double xVal;
   double yVal;
@@ -51,7 +51,7 @@ public class DescoreWithDrive extends SequentialCommandGroup {
       xVal = -xSup.getAsDouble();
       yVal = YPID.calculate(PhotonLocalization.intakeCamToTagY * 100);
       rotVal = -rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100);
-      driveCommand = new TeleopSwerve(mSwerveSubsystem, ()-> -xSup.getAsDouble(), ()-> YPID.calculate(PhotonLocalization.intakeCamToTagY * 100) - yOffset.getAsDouble(), ()-> rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100), ()-> true);
+      driveCommand = new TeleopSwerve(mSwerveSubsystem, ()-> -xSup.getAsDouble(), ()-> YPID.calculate(PhotonLocalization.intakeCamToTagY * 100) + 0.05, ()-> rotationPID.calculate(PhotonLocalization.intakeCamToTagRotation * 100), ()-> true);
     // }
 
     addCommands(mSwerveSubsystem.PathfindToPose(pose), driveCommand);
